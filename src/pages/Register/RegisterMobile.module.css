@@ -1,0 +1,39 @@
+
+.BgRegis {
+  width: 100%;
+  height: 100%;
+}
+
+.BgRegis::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 150px;
+  background: url('../../image/wave.png');
+  background-color: #2eba69;
+  background-size: cover;
+  z-index: -1;
+}
+
+.ContainerRegis {
+  position: absolute;
+  top: 15%;
+  width: 85vw;
+}
+
+.JustifyCenter {
+  display: flex;
+  justify-content: center;
+}
+
+.CancelPosition {
+  position: relative;
+  top: 30px;
+  right: 20px;
+}
+
+.InputH {
+  height: 60px;
+}

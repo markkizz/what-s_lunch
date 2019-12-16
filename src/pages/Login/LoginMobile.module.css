@@ -1,0 +1,54 @@
+.BgLogin {
+  width: 100%;
+  height: 100%;
+}
+
+
+
+.BgLogin::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 150px;
+  background: url('../../image/wave.png');
+  background-color: #2eba69;
+  background-size: cover;
+  z-index: -1;
+}
+
+/* .BgLogin::before {
+  position: absolute;
+  content: '';
+  display: block;
+  width: 680px;
+  height: 680px;
+  background: linear-gradient(0deg, rgba(46,186,105,1) 0%, rgba(255,255,255,1) 100%);
+  bottom: 575px;
+  transform: rotate(30deg);
+  overflow: hidden;
+} */
+
+.ContainerLogin {
+  position: absolute;
+  top: 15%;
+  width: 85vw;
+}
+
+.JustifyCenter {
+  display: flex;
+  justify-content: center;
+}
+
+.CancelPosition {
+  position: absolute;
+  top: 50px;
+  right: 20px;
+  z-index: -1;
+  font-size: 18px;
+}
+
+.InputH {
+  height: 60px;
+}

@@ -1,0 +1,47 @@
+.BgDropdown {
+  position: absolute;
+  top: 65px;
+  left: 0.6rem;
+  width: 95vw;
+  height: 80vh;
+  background-color: white;
+}
+
+.BgDropdown::before {
+  content: "";
+  display: block;
+  width: 20px;
+  height: 20px;
+  background-color: white;
+  position: absolute;
+  top: -5px;
+  left: 50%;
+  transform: rotate(45deg);
+}
+
+.InputCustom {
+  width: 90vw;
+  margin-top: 10px;
+}
+
+.JustifyCenter {
+  display: flex;
+  justify-content: center;
+}
+
+.Container {
+  margin: 0 10px;
+}
+
+.DropdownLocationCard {
+  width: 100%;
+  padding: 15px 30px 10px;
+  font-size: 17px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+}
+
+.DropdownLocationCard:last-child {
+  border: none;
+}
+
+
