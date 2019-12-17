@@ -4,7 +4,7 @@ import styled from "styled-components";
 import style from "./Navbar.module.css";
 import DropdownLocation from "../DropdownLocation/DropdownLocation";
 import DropdownUser from "../DropdownUser/DropdownUser";
-import ModalLogin from '../ModalLogin/ModalLogin';
+import ModalLogin from "../ModalLogin/ModalLogin";
 
 const ButtonLocation = styled.button`
   display: flex;
@@ -34,24 +34,37 @@ export class Navbar extends Component {
     dropdownLocation: false,
     dropdownUser: false,
     isSearch: true,
-    mobileScreen: false
+    mobileScreen: false,
+    modalLoginVisible: false
+  };
+
+  handleShowModal = () => {
+    this.setState(state => ({
+      modalLoginVisible: !state.modalLoginVisible
+    }));
   };
 
   componentDidMount = () => {
     window.addEventListener("resize", this.resize.bind(this));
     this.resize();
-  }
+  };
 
   resize = () => {
-    let isMobileScreen = (window.innerWidth <= 767);
+    let isMobileScreen = window.innerWidth <= 767;
     if (isMobileScreen !== this.state.mobileScreen) {
-        this.setState({mobileScreen: isMobileScreen});
+      this.setState({ mobileScreen: isMobileScreen });
     }
-  }
+  };
 
   render() {
-    const { dropdownLocation, dropdownUser, isSearch, mobileScreen } = this.state;
-    console.log(mobileScreen)
+    const {
+      dropdownLocation,
+      dropdownUser,
+      isSearch,
+      mobileScreen,
+      modalLoginVisible
+    } = this.state;
+    console.log(mobileScreen);
     return (
       <>
         <nav>
@@ -74,16 +87,22 @@ export class Navbar extends Component {
               )}
             </Col>
             <Col span={4}>
-              {mobileScreen
-              ? <Icon type="user" />
-              : <Button type="primary">Login</Button>
-              }
+              {mobileScreen ? (
+                <Icon type="user" />
+              ) : (
+                <Button type="primary" onClick={this.handleShowModal}>
+                  Login
+                </Button>
+              )}
             </Col>
           </Row>
         </nav>
         {dropdownLocation && <DropdownLocation />}
         {dropdownUser && <DropdownUser />}
-        <ModalLogin />
+        <ModalLogin
+          visibility={modalLoginVisible}
+          onCancel={this.handleShowModal}
+        />
       </>
     );
   }

@@ -17,10 +17,10 @@ export class ModalLogin extends Component {
 
   render() {
     const { isCreateAccount } = this.state;
-
+    const {visibility, onCancel} = this.props
     return (
       <>
-        <Modal visible={true} footer={null} width={420}>
+        <Modal visible={visibility} onCancel={onCancel} footer={null} width={420} closable>
           <Row type="flex" justify="center" align="middle" gutter={[16, 16]}>
             <Col>
               <img
