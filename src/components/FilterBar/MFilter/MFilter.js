@@ -34,7 +34,7 @@ function MFilter() {
   return (
     <>
       <Modal
-        visible
+
         title={
           <Title level={3} style={{ margin: 0 }}>
             Filter
@@ -102,7 +102,7 @@ function MFilter() {
           {/* button selection */}
           <Col span={24}>
             <Row type="flex" align="middle" className={style.ButtonSelectC}>
-              <Col span={24} style={{ width: "96%", marginBottom: "25px" }}>
+              <Col span={24} style={{ width: "96%", marginBottom: "30px" }}>
                 <Slider range marks={marks} step={null} defaultValue={[33, 66]} tipFormatter={null} />
               </Col>
             </Row>
@@ -113,7 +113,7 @@ function MFilter() {
             </Button>
           </Col>
           <Col span={24}>
-            <Button block size="large" type="primary">
+            <Button block size="large" className="btn-primary-transparent" style={{marginTop: 15}}>
               cancel
             </Button>
           </Col>

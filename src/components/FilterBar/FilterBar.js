@@ -1,8 +1,25 @@
 import React, { Component } from "react";
 import style from "./FilterBar.module.css";
-import { Row, Col, Icon, Button } from "antd";
+import { Row, Col, Icon, Button, Dropdown, Menu } from "antd";
 import { FaSlidersH } from "react-icons/fa";
-import ModalFilter from './MFilter/MFilter'
+import ModalFilter from "./MFilter/MFilter";
+
+const menu = (
+  <Menu>
+    <Menu.Item key="1">
+      <Icon type="user" />
+      1st menu item
+    </Menu.Item>
+    <Menu.Item key="2">
+      <Icon type="user" />
+      2nd menu item
+    </Menu.Item>
+    <Menu.Item key="3">
+      <Icon type="user" />
+      3rd item
+    </Menu.Item>
+  </Menu>
+);
 
 export class FilterBar extends Component {
   render() {
@@ -26,12 +43,14 @@ export class FilterBar extends Component {
             </Button>
           </Col>
           <Col className={style.ColCustom}>
-            <Button type="primary" className={style.ButtonCustom}>
-              <p>
-                Cuisine
-                <Icon type="down" style={{fontSize: 10, marginLeft: 5 }} />
-              </p>
-            </Button>
+            <Dropdown overlay={menu}>
+              <Button type="primary" className={style.ButtonCustom}>
+                <p>
+                  Cuisine
+                  <Icon type="down" style={{ fontSize: 10, marginLeft: 5 }} />
+                </p>
+              </Button>
+            </Dropdown>
           </Col>
           <Col className={style.ColCustom}>
             <Button type="primary" className={style.ButtonCustom}>
@@ -49,7 +68,7 @@ export class FilterBar extends Component {
             </Button>
           </Col>
         </Row>
-        <ModalFilter/>
+        <ModalFilter />
       </>
     );
   }
