@@ -3,5 +3,53 @@
 }
 
 .CardCustom {
-  width: 325px;
+  width: 350px;
+  height: 235px;
+  padding-left: -100px;
+  padding-right: 16px;
+  border-radius: 15px;
+  margin-bottom: 18px;
+}
+
+.CardImg {
+  position: absolute;
+  top: -16px;
+  left: -1px;
+  width: 155px;
+  height: 125px;
+  border-radius: 15px;
+}
+
+.ButtonCard {
+  width: 100%;
+  position: absolute;
+  bottom: 15px;
+  text-align: center;
+}
+
+.PositionP p {
+  height: 100%;
+  overflow-y: hidden;
+}
+
+.ContentP {
+  position: absolute;
+  bottom: 60px;
+  margin-left: 16px;
+}
+
+.StarCustom {
+  font-size: 14px;
+  margin: 5px 5px 10px 0;
+}
+
+.ButtonCustom {
+  color: #2eba69;
+  border-color: #2eba69;
+  padding: 0.25em 2em;
+}
+
+.ButtonCustom:active , .ButtonCustom:hover{
+  color: #2eba69 !important;
+  border-color: #2eba69 !important;
 }

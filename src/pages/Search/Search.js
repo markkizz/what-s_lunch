@@ -12,8 +12,17 @@ export class Search extends Component {
         <Navbar />
         <FilterBar />
         <div className={style.CardContainer}>
-          <Row type="flex" justify="center">
-            <Col span={24}>
+          <Row type="flex" justify="center" align="middle">
+            <Col xs={24} sm={12} className={style.JustifyCenter}>
+              <RestaurantCard />
+            </Col>
+            <Col xs={24} sm={12} className={style.JustifyCenter}>
+              <RestaurantCard />
+            </Col>
+            <Col xs={24} sm={12} className={style.JustifyCenter}>
+              <RestaurantCard />
+            </Col>
+            <Col xs={24} sm={12} className={style.JustifyCenter}>
               <RestaurantCard />
             </Col>
           </Row>
@@ -24,3 +33,5 @@ export class Search extends Component {
 }
 
 export default Search;
+
+

@@ -20,7 +20,6 @@
 }
 
 .atn-btn {
-
   border-color: #2eba69 !important;
 }
 
@@ -40,6 +39,8 @@
   outline: none !important;
 }
 
-
+h3 {
+  margin: 0 !important;
+}
 
 
