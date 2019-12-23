@@ -68,34 +68,36 @@ export class Navbar extends Component {
     return (
       <>
         <nav>
-          <Row type="flex" justify="space-between" align="middle">
-            <Col span={2}>
-              <img
-                src={require("../../image/logo.png")}
-                alt="what's lunch"
-                className={style.LogoImg}
-              />
-            </Col>
-            <Col span={4}>
-              {isSearch && (
-                <ButtonLocation>
-                  <span style={{ color: "#2eba69" }}>
-                    <Icon type="search" />
-                  </span>
-                  <span>Pathumwan</span>
-                </ButtonLocation>
-              )}
-            </Col>
-            <Col span={4}>
-              {mobileScreen ? (
-                <Icon type="user" />
-              ) : (
-                <Button type="primary" onClick={this.handleShowModal}>
-                  Login
-                </Button>
-              )}
-            </Col>
-          </Row>
+          <div className="container">
+            <Row type="flex" justify="space-between" align="middle">
+              <Col span={2}>
+                <img
+                  src={require("../../image/logo.png")}
+                  alt="what's lunch"
+                  className={style.LogoImg}
+                />
+              </Col>
+              <Col span={4}>
+                {isSearch && (
+                  <ButtonLocation>
+                    <span style={{ color: "#2eba69" }}>
+                      <Icon type="search" />
+                    </span>
+                    <span>Pathumwan</span>
+                  </ButtonLocation>
+                )}
+              </Col>
+              <Col span={4}>
+                {mobileScreen ? (
+                  <Icon type="user" />
+                ) : (
+                  <Button type="primary" onClick={this.handleShowModal}>
+                    Login
+                  </Button>
+                )}
+              </Col>
+            </Row>
+          </div>
         </nav>
         {dropdownLocation && <DropdownLocation />}
         {dropdownUser && <DropdownUser />}

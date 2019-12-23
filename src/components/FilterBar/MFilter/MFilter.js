@@ -47,8 +47,8 @@ function MFilter() {
         <Row>
           {/* Distict header */}
           <Col span={24}>
-            <div className={`${style.TextLeft} ${style.TextHead}`}>Distict</div>
-            <div className={`${style.TextRight} text-muted`}>
+            <div className={`text-left ${style.TextHead}`}>Distict</div>
+            <div className={`text-right text-muted`}>
               Clear Selection
             </div>
           </Col>
@@ -72,8 +72,8 @@ function MFilter() {
           <Divider />
           {/* Cuisine header */}
           <Col span={24}>
-            <div className={`${style.TextLeft} ${style.TextHead}`}>Cuisine</div>
-            <div className={`${style.TextRight} text-muted`}>
+            <div className={`text-left ${style.TextHead}`}>Cuisine</div>
+            <div className={`text-right text-muted`}>
               Clear Selection
             </div>
           </Col>
@@ -97,7 +97,7 @@ function MFilter() {
           <Divider />
           {/* Price header */}
           <Col span={24}>
-            <div className={`${style.TextLeft} ${style.TextHead}`}>Price</div>
+            <div className={`text-left ${style.TextHead}`}>Price</div>
           </Col>
           {/* button selection */}
           <Col span={24}>
