@@ -16,6 +16,7 @@ import PostCard from "../../components/PostCard/PostCard";
 import { FaLocationArrow, FaSearch, FaHeart } from "react-icons/fa";
 import { MdRestaurant, MdRateReview } from "react-icons/md";
 import { GiBookCover } from "react-icons/gi";
+import { TextLeft, TextRight } from "../../shared";
 
 const { Option } = Select;
 
@@ -169,14 +170,14 @@ export class HomePage extends Component {
             ))}
           </Row>
           <div className={style.TrendingContainer}>
-            <div className="text-left">
+            <TextLeft>
               <h3>Trending Restaurant</h3>
-            </div>
-            <div className="text-right">
+            </TextLeft>
+            <TextRight>
               <Link to="/search/popular" className="link">
                 <p>See all</p>
               </Link>
-            </div>
+            </TextRight>
             <div className={style.CardContainer}>
               {restaurants.map((restaurant, i) => (
                 <Link
