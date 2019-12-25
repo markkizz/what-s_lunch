@@ -1,0 +1,23 @@
+.ImgSearch {
+  background: url('../../image/homepagesearch.jpg') no-repeat;
+  background-size: cover;
+  width: 100%;
+  height: 250px;
+}
+
+.FlexCenter {
+  display: flex;
+  justify-items: center;
+  align-items: center;
+  width: 100%;
+  flex-direction: column;
+}
+
+.InputPosition {
+  height: 250px;
+}
+
+.InputStyle {
+  width: 85%;
+  margin-bottom: 5px;
+}
