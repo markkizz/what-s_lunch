@@ -1,0 +1,35 @@
+.TextLeft {
+  float: left;
+  text-align: left;
+}
+
+.TextRight {
+  float: right;
+  text-align: right;
+}
+
+.TextHead {
+  font-weight: 700;
+  font-size: 16px;
+}
+
+.ButtonSelectC {
+  height: 50px;
+  margin-top: 8px;
+  margin-bottom: 10px;
+  flex-wrap: nowrap;
+  overflow-y: hidden;
+}
+
+.ButtonSelectC::-webkit-scrollbar {
+  display: none;
+}
+
+
+
+@media only screen and (min-width: 1024px) {
+  .ButtonSelectC::-webkit-scrollbar {
+    display: block;
+  }
+}
+

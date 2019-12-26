@@ -6,6 +6,12 @@
   --antd-wave-shadow-color: none !important;
 }
 
+.bg-page {
+  width: 100%;
+  height: 100vh;
+  background-color: #f3f4f5;
+}
+
 [ant-click-animating-without-extra-node]:after {
 	animation: 0s !important;
 }
@@ -20,7 +26,6 @@
 }
 
 .atn-btn {
-
   border-color: #2eba69 !important;
 }
 
@@ -28,4 +33,65 @@
   border-color: none !important;
 }
 
+.text-muted {
+  color: rgba(0, 0, 0, 0.4);
+  font-style: italic;
+  font-weight: 500;
+}
 
+.btn-primary-transparent {
+  border-color: var(--main-color) !important;
+  color: var(--main-color) !important;
+  outline: none !important;
+}
+
+h3, h2 {
+  margin-bottom: 5px !important;
+}
+
+.ant-checkbox-group-item {
+  display: block;
+  margin-right: 0;
+}
+
+.text-left {
+  float: left;
+  text-align: left;
+}
+
+.text-right {
+  float: right;
+  text-align: right;
+}
+
+.container {
+  padding-right: 15px;
+  padding-left: 15px;
+  margin-right: auto;
+  margin-left: auto;
+}
+@media (min-width: 768px) {
+  .container {
+    width: 750px;
+  }
+}
+@media (min-width: 992px) {
+  .container {
+    width: 970px;
+  }
+}
+@media (min-width: 1200px) {
+  .container {
+    width: 1170px;
+  }
+}
+
+
+/* refactor card custom */
+
+.card-custom {
+  padding: 16px 26px;
+  margin-top: 15px;
+  width: 100%;
+  height: 100%;
+}

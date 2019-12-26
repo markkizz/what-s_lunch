@@ -1,0 +1,26 @@
+.ContainerFilter {
+  width: 100%;
+  height: 50px;
+  flex-wrap: nowrap;
+  overflow-y: hidden;
+}
+
+.ContainerFilter::-webkit-scrollbar {
+  display: none;
+}
+
+.ButtonCustom {
+  border-radius: 15px;
+  display: flex;
+  align-content: center;
+}
+
+.ColCustom {
+  padding: 0 8px 0 0!important;
+}
+
+@media only screen and (min-width: 1024px) {
+  .ContainerFilter {
+    display: none;
+  }
+}
