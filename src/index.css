@@ -9,7 +9,7 @@
 .bg-page {
   width: 100%;
   height: 100vh;
-  background-color: #f2f3f5;
+  background-color: #f3f4f5;
 }
 
 [ant-click-animating-without-extra-node]:after {

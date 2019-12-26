@@ -5,24 +5,25 @@ import RegisterMobile from "./pages/Register/RegisterMobile";
 import Search from "./pages/Search/Search";
 import RestaurantDetail from "./pages/RestaurantDetail/RestaurantDetail";
 import WriteReview from "./pages/WriteReview/WriteReview";
-import HomePage from './pages/HomePage/HomePage';
-
+import HomePage from "./pages/HomePage/HomePage";
+import { Layout } from "antd";
 
 export class App extends Component {
-
   componentDidMount = () => {
-    if(module.hot) {
-      module.hot.accept('./pages/HomePage/HomePage', () => {
-        this.forceUpdate()
-      })
+    if (module.hot) {
+      module.hot.accept("./pages/HomePage/HomePage", () => {
+        this.forceUpdate();
+      });
     }
-  }
+  };
 
   render() {
     return (
-      <>
-        <HomePage />
-      </>
+      <div>
+        <Layout>
+          <HomePage />
+        </Layout>
+      </div>
     );
   }
 }

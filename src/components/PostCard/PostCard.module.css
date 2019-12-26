@@ -1,0 +1,26 @@
+.PostContainer {
+  width: 100%;
+  height: 100%;
+  padding: 1.5em 1.25em;
+  background-color: white;
+}
+
+.UserContainer {
+  width: 100%;
+  height: 50px;
+}
+
+.UserSetting {
+  text-align: right;
+  line-height: 50px;
+}
+
+.ContentContainer {
+  margin-top: 10px;
+}
+
+.ImgContainer img {
+  width: 100%;
+  height: 200px;
+  margin-top: 20px;
+}

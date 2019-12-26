@@ -1,5 +1,5 @@
 .ImgSearch {
-  background: url('../../image/homepagesearch.jpg') no-repeat;
+  background: url("../../image/homepagesearch.jpg") no-repeat;
   background-size: cover;
   width: 100%;
   height: 250px;
@@ -10,7 +10,7 @@
   justify-items: center;
   align-items: center;
   width: 100%;
-  flex-direction: column
+  flex-direction: column;
 }
 
 .InputPosition {
@@ -41,8 +41,9 @@
 .TrendingContainer {
   width: 100%;
   height: 315px;
+  margin: 20px 0;
   padding: 1.25em;
-  background-color: white;
+  background-color: #ffffff;
 }
 
 .CardContainer {
@@ -51,7 +52,6 @@
   display: flex;
   flex-wrap: nowrap;
   overflow-y: hidden;
-
 }
 
 .CardRestaurant {
@@ -59,5 +59,4 @@
   height: 90%;
   margin: 10px 30px 5px 0;
 }
-
 
