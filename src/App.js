@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import "antd/dist/antd.css";
+import { Route, Switch } from "react-router-dom";
 import LoginMobile from "./pages/Login/LoginMobile";
 import RegisterMobile from "./pages/Register/RegisterMobile";
 import Search from "./pages/Search/Search";
@@ -19,11 +20,13 @@ export class App extends Component {
 
   render() {
     return (
-      <div>
+      <>
         <Layout>
-          <HomePage />
+          <Switch>
+            <Route exact path="/" component={HomePage} />
+          </Switch>
         </Layout>
-      </div>
+      </>
     );
   }
 }
