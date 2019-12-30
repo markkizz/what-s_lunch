@@ -5,7 +5,7 @@ import store from "../redux/store/store";
 axios.defaults.baseURL = "http://localhost:8080";
 
 const TOKEN = "ACCESS_TOKEN";
-const UNPROTECTED_PATHS = ["userLogin", "userRegister"];
+const UNPROTECTED_PATHS = ["userLogin", "userRegistation"];
 
 const isUnprotectedPath = url =>
   UNPROTECTED_PATHS.find(path => path === url) && true;

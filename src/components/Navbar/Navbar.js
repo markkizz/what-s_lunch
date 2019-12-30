@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Row, Col, Icon, Button, Avatar } from "antd";
-import { FaUserCircle } from "react-icons/fa";
 import styled from "styled-components";
 import style from "./Navbar.module.css";
 import DropdownLocation from "../DropdownLocation/DropdownLocation";

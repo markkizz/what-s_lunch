@@ -36,7 +36,7 @@ export class HomePage extends Component {
                   search
                   // value={this.state.value}
                   // placeholder={this.props.placeholder}
-                  style={{ width: "85%" }}
+                  style={{ width: "85%", marginTop: 10 }}
                   showArrow={false}
                   filterOption={false}
                   notFoundContent={null}
