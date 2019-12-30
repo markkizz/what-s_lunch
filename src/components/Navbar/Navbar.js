@@ -1,5 +1,7 @@
 import React, { Component } from "react";
-import { Row, Col, Icon, Button } from "antd";
+import { connect } from "react-redux";
+import { Row, Col, Icon, Button, Avatar } from "antd";
+import { FaUserCircle } from "react-icons/fa";
 import styled from "styled-components";
 import style from "./Navbar.module.css";
 import DropdownLocation from "../DropdownLocation/DropdownLocation";
@@ -38,9 +40,9 @@ export class Navbar extends Component {
     modalLoginVisible: false
   };
 
-  handleShowModal = () => {
+  handleShow = component => () => {
     this.setState(state => ({
-      modalLoginVisible: !state.modalLoginVisible
+      [component]: !state[`${component}`]
     }));
   };
 
@@ -52,7 +54,29 @@ export class Navbar extends Component {
   resize = () => {
     let isMobileScreen = window.innerWidth <= 767;
     if (isMobileScreen !== this.state.mobileScreen) {
-      this.setState({ mobileScreen: isMobileScreen });
+      this.setState({
+        mobileScreen: isMobileScreen,
+        dropdownUser: false,
+        dropdownLocation: false
+      });
+    }
+  };
+
+  renderDiffComponentWhenMobileScreen = () => {
+    const { mobileScreen } = this.state;
+    const { role } = this.props.user;
+    if (mobileScreen) {
+      if (role === "user") {
+        return <Avatar onClick={this.handleShow("dropdownUser")}>USER</Avatar>;
+      } else {
+        return <Icon type="user" onClick={this.handleShow("dropdownUser")} />;
+      }
+    } else {
+      return (
+        <Button type="primary" onClick={this.handleShow("modalLoginVisible")}>
+          Login
+        </Button>
+      );
     }
   };
 
@@ -64,7 +88,7 @@ export class Navbar extends Component {
       mobileScreen,
       modalLoginVisible
     } = this.state;
-    console.log(mobileScreen);
+    console.log("isMobileScreen", mobileScreen);
     return (
       <>
         <nav>
@@ -87,15 +111,7 @@ export class Navbar extends Component {
                   </ButtonLocation>
                 )}
               </Col>
-              <Col span={4}>
-                {mobileScreen ? (
-                  <Icon type="user" />
-                ) : (
-                  <Button type="primary" onClick={this.handleShowModal}>
-                    Login
-                  </Button>
-                )}
-              </Col>
+              <Col span={4}>{this.renderDiffComponentWhenMobileScreen()}</Col>
             </Row>
           </div>
         </nav>
@@ -103,11 +119,17 @@ export class Navbar extends Component {
         {dropdownUser && <DropdownUser />}
         <ModalLogin
           visibility={modalLoginVisible}
-          onCancel={this.handleShowModal}
+          onCancel={this.handleShow("modalLoginVisible")}
         />
       </>
     );
   }
 }
 
-export default Navbar;
+const mapStateToProps = state => {
+  return {
+    user: state.user
+  };
+};
+
+export default connect(mapStateToProps, null)(Navbar);

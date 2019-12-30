@@ -5,6 +5,7 @@
   width: 95vw;
   height: 35vh;
   background-color: white;
+  z-index: 2;
 }
 
 .BgDropdown::before {

@@ -1,10 +1,12 @@
 import React, { Component } from "react";
+import { Link } from "react-router-dom";
 import { Row, Input, Col, Button, Icon, Form } from "antd";
 import style from "./RegisterMobile.module.css";
 import { FaUserCircle, FaPhone } from "react-icons/fa";
 
-
 export class RegisterMobile extends Component {
+  state = {};
+
   render() {
     return (
       <div className={style.BgRegis}>
@@ -24,7 +26,7 @@ export class RegisterMobile extends Component {
               <Form.Item>
                 <Input
                   size="large"
-                  placeholder="Full name"
+                  placeholder="First name"
                   prefix={<FaUserCircle />}
                 />
               </Form.Item>
@@ -33,9 +35,14 @@ export class RegisterMobile extends Component {
               <Form.Item>
                 <Input
                   size="large"
-                  placeholder="Phone"
-                  prefix={<FaPhone />}
+                  placeholder="Last name"
+                  prefix={<FaUserCircle />}
                 />
+              </Form.Item>
+            </Col>
+            <Col span={24} className={style.InputH}>
+              <Form.Item>
+                <Input size="large" placeholder="Phone" prefix={<FaPhone />} />
               </Form.Item>
             </Col>
             <Col span={24} className={style.InputH}>
@@ -62,8 +69,10 @@ export class RegisterMobile extends Component {
                 CREATE ACCOUNT
               </Button>
             </Col>
-            <Col span={24} style={{textAlign: "center"}}>
-              <p>Already have an account? Login</p>
+            <Col span={24} style={{ textAlign: "center" }}>
+              <p>
+                Already have an account? <Link to="/m.login">Login</Link>
+              </p>
             </Col>
           </div>
         </Row>

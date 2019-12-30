@@ -1,12 +1,8 @@
 import React, { Component } from "react";
 import "antd/dist/antd.css";
 import { Route, Switch } from "react-router-dom";
-import LoginMobile from "./pages/Login/LoginMobile";
-import RegisterMobile from "./pages/Register/RegisterMobile";
-import Search from "./pages/Search/Search";
-import RestaurantDetail from "./pages/RestaurantDetail/RestaurantDetail";
-import WriteReview from "./pages/WriteReview/WriteReview";
-import HomePage from "./pages/HomePage/HomePage";
+import { connect } from "react-redux";
+import { PrivateRoutes } from "./components/routes/PrivateRoutes";
 import { Layout } from "antd";
 
 export class App extends Component {
@@ -19,16 +15,21 @@ export class App extends Component {
   };
 
   render() {
+    let role = this.props.user.role;
     return (
       <>
-        <Layout>
-          <Switch>
-            <Route exact path="/" component={HomePage} />
-          </Switch>
-        </Layout>
+        <Switch>
+          <PrivateRoutes role={role} />
+        </Switch>
       </>
     );
   }
 }
 
-export default App;
+const mapStateToProps = state => {
+  return {
+    user: state.user
+  };
+};
+
+export default connect(mapStateToProps, null)(App);

@@ -1,16 +1,6 @@
 import React, { Component } from "react";
-import {
-  Row,
-  Col,
-  Rate,
-  Icon,
-  Card,
-  Divider,
-  Button,
-  Input,
-  Select,
-  Avatar
-} from "antd";
+import { Row, Col, Icon, Input, Select } from "antd";
+import { connect } from "react-redux";
 import Navbar from "../../components/Navbar/Navbar";
 import style from "./HomePage.module.css";
 import RestaurantMiniCard from "../../components/RestaurantMiniCard/RestaurantMiniCard";
@@ -110,4 +100,10 @@ export class HomePage extends Component {
   }
 }
 
-export default HomePage;
+// const mapStateToProps = state => {
+//   return {
+//     user: state.user
+//   };
+// };
+
+export default connect(null, null)(HomePage);

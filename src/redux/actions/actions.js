@@ -8,7 +8,7 @@ const removeLocalStorage = token => localStorage.removeItem(TOKEN);
 export const USER_LOGIN = "USER_LOGIN";
 export const USER_LOGOUT = "USER_LOGOUT";
 
-// * ACTION CREATOR
+// * ACTION CREATOR *
 
 export function login(user, token) {
   setLocalStorage(token);

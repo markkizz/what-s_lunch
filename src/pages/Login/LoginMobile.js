@@ -1,4 +1,9 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
+import { login } from "../../redux/actions/actions";
+import { Link } from "react-router-dom";
+import axios from "../../config/api.service";
+import { MdCancel } from "react-icons/md";
 import { Row, Input, Col, Button, Divider, Icon, Form } from "antd";
 import style from "./LoginMobile.module.css";
 
@@ -8,9 +13,11 @@ export class Login extends Component {
       <div className={style.BgLogin}>
         <Row type="flex" justify="end">
           <Col>
-            <span className={style.CancelPosition}>
-              <Icon type="close" />
-            </span>
+            <Link to="/" style={{ color: "black" }}>
+              <span className={style.CancelPosition}>
+                <MdCancel style={{ fontSize: 20 }} />
+              </span>
+            </Link>
           </Col>
         </Row>
         <Row type="flex" justify="center" align="middle" gutter={[16, 16]}>
@@ -51,15 +58,17 @@ export class Login extends Component {
                 <span>or you can</span>
               </Divider>
             </Col>
-            <Col className={style.JustifyCenter}>
-              <Button
-                block
-                size="large"
-                style={{ borderColor: "#2eba69", color: "#2eba69" }}
-              >
-                CREATE AN ACCOUNT
-              </Button>
-            </Col>
+            <Link to="/m.register">
+              <Col className={style.JustifyCenter}>
+                <Button
+                  block
+                  size="large"
+                  style={{ borderColor: "#2eba69", color: "#2eba69" }}
+                >
+                  CREATE AN ACCOUNT
+                </Button>
+              </Col>
+            </Link>
           </div>
         </Row>
       </div>
@@ -67,4 +76,8 @@ export class Login extends Component {
   }
 }
 
-export default Login;
+const mapDispatchToProps = {
+  login: login
+};
+
+export default connect(null, mapDispatchToProps)(Login);

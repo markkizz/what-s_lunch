@@ -1,5 +1,5 @@
 import axios from "axios";
-import { LOGOUT_USER } from "../redux/actions/actions";
+import { USER_LOGOUT } from "../redux/actions/actions";
 import store from "../redux/store/store";
 
 axios.defaults.baseURL = "http://localhost:8080";
@@ -44,7 +44,7 @@ axios.interceptors.response.use(
       console.log("Session expire, redirect to login");
 
       localStorage.removeItem(TOKEN);
-      store.dispatch({ type: LOGOUT_USER });
+      store.dispatch({ type: USER_LOGOUT });
     }
 
     throw error;

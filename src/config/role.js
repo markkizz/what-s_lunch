@@ -9,7 +9,7 @@ const pageComponents = {
   },
   homepage: {
     component: "HomePage",
-    path: "/homepage"
+    path: "/"
   },
   profile: {
     component: "Profile",
@@ -17,7 +17,7 @@ const pageComponents = {
   },
   search: {
     component: "Search",
-    path: "/Search"
+    path: "/search"
   },
   restaurantDetail: {
     component: "RestaurantDetail",
@@ -26,7 +26,7 @@ const pageComponents = {
   writeReview: {
     component: "WriteReview",
     path: "/write-review"
-  },
+  }
 };
 
 export default {
@@ -47,6 +47,8 @@ export default {
       pageComponents.homepage,
       pageComponents.search,
       pageComponents.restaurantDetail,
+      pageComponents.loginMobile,
+      pageComponents.registerMobile
     ]
   }
-}
+};
