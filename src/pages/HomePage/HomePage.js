@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Row, Col, Icon, Input, Select } from "antd";
 import { connect } from "react-redux";
+import { thunk_action_restaurant } from "../../redux/actions/actions";
 import Navbar from "../../components/Navbar/Navbar";
 import style from "./HomePage.module.css";
 import RestaurantMiniCard from "../../components/RestaurantMiniCard/RestaurantMiniCard";
@@ -9,11 +10,24 @@ import PostCard from "../../components/PostCard/PostCard";
 const { Option } = Select;
 
 export class HomePage extends Component {
+  componentDidMount = () => {
+    // try {
+    //   const { data } = await axios.get("/allRestaurants");
+    //   const popularRating
+    //   this.setState(state => ({
+    //     restaurants: data
+    //   }))
+    // } catch (err) {
+    //   console.log(err);
+    // }
+    this.props.dispatch(thunk_action_restaurant());
+  };
+
   render() {
     const data = ["a", "b", "c"];
     const options = data.map(d => <Option key={d}>{d}</Option>);
     return (
-      <>
+      <div className="bg-page">
         <Navbar />
         <div className={style.ImgSearch}>
           <div className="container">
@@ -95,15 +109,15 @@ export class HomePage extends Component {
           </div>
           {/* container */}
         </div>
-      </>
+      </div>
     );
   }
 }
 
-// const mapStateToProps = state => {
-//   return {
-//     user: state.user
-//   };
-// };
+const mapStateToProps = state => {
+  return {
+    restaurant: state.restaurant
+  };
+};
 
-export default connect(null, null)(HomePage);
+export default connect(mapStateToProps, null)(HomePage);

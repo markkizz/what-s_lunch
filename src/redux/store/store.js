@@ -1,5 +1,6 @@
-import { createStore } from "redux";
+import { createStore, applyMiddleware, compose } from "redux";
 import reducers from "../reducers/reducers";
+import thunk from "redux-thunk";
 
 const saveState = state => {
   try {
@@ -28,11 +29,11 @@ const persistStore = loadState();
 const store = createStore(
   reducers,
   persistStore,
-  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+  compose(applyMiddleware(thunk), window.__REDUX_DEVTOOLS_EXTENSION__())
 );
 
 store.subscribe(() => {
-  console.log(store.getState());
+  console.log("store state", store.getState());
   saveState(store.getState());
 });
 

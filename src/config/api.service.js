@@ -5,21 +5,20 @@ import store from "../redux/store/store";
 axios.defaults.baseURL = "http://localhost:8080";
 
 const TOKEN = "ACCESS_TOKEN";
-const UNPROTECTED_PATHS = ["userLogin", "userRegistation"];
+const UNPROTECTED_PATHS = ["review-create"];
 
-const isUnprotectedPath = url =>
+const isProtectedPath = url =>
   UNPROTECTED_PATHS.find(path => path === url) && true;
 
 axios.interceptors.request.use(
   async config => {
     console.log(config);
 
-    if (isUnprotectedPath(config.url)) {
+    if (isProtectedPath(config.url)) {
+      let token = localStorage.getItem(TOKEN);
+      config.headers["Authorization"] = `Bearer ${token}`;
       return config;
     }
-
-    let token = localStorage.getItem(TOKEN);
-    config.headers["Authorization"] = `Bearer ${token}`;
     return config;
   },
   async error => {
@@ -36,11 +35,11 @@ axios.interceptors.response.use(
     if (error.request === undefined) throw error;
 
     let url = error.request.responseURL;
-    if (error.request.status === 401 && isUnprotectedPath(url)) {
+    if (error.request.status === 401) {
       throw error;
     }
 
-    if (error.request.status === 401) {
+    if (error.request.status === 401 && isProtectedPath(url)) {
       console.log("Session expire, redirect to login");
 
       localStorage.removeItem(TOKEN);

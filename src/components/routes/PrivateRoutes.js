@@ -17,8 +17,6 @@ export class PrivateRoutes extends Component {
 
   render() {
     const { role } = this.props;
-    console.log("state", this.state);
-    console.log(rolesConfig[role].routes);
     const { allowedRoutes } = this.state;
     return (
       <>
