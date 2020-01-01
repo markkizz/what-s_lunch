@@ -9,6 +9,11 @@ import { Row, Col } from "antd";
 export class Search extends Component {
   // TODO: finish filter restaurant card
   render() {
+    // const {
+    //   params: { restaurantName, district }
+    // } = this.props.match;
+    // console.log(restaurantName, district);
+    console.log(this.props.match);
     return (
       <div className="bg-page">
         <Navbar />

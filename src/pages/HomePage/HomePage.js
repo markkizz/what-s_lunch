@@ -1,31 +1,53 @@
 import React, { Component } from "react";
-import { Row, Col, Icon, Input, Select } from "antd";
+import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { thunk_action_restaurant } from "../../redux/actions/actions";
+import { Row, Col, Icon, Input, Select, Button } from "antd";
 import Navbar from "../../components/Navbar/Navbar";
 import style from "./HomePage.module.css";
 import RestaurantMiniCard from "../../components/RestaurantMiniCard/RestaurantMiniCard";
 import PostCard from "../../components/PostCard/PostCard";
+import { FaLocationArrow, FaSearch } from "react-icons/fa";
+import { MdRestaurant, MdRateReview } from "react-icons/md";
+import { GiBookCover } from "react-icons/gi";
 
 const { Option } = Select;
 
 export class HomePage extends Component {
+  state = {
+    districtSelected: "",
+    searchText: ""
+  };
+
+  handleSelected = component => value => {
+    this.setState(state => ({
+      [component]: value
+    }));
+  };
+
+  handleClick = () => {
+    const { districtSelected, searchText } = this.state;
+    if (districtSelected && searchText) {
+      this.props.history.push(`/search/${searchText}/${districtSelected}`);
+    } else if (searchText) {
+      this.props.history.push(`/search/${searchText}`);
+    }
+  };
+
   componentDidMount = () => {
-    // try {
-    //   const { data } = await axios.get("/allRestaurants");
-    //   const popularRating
-    //   this.setState(state => ({
-    //     restaurants: data
-    //   }))
-    // } catch (err) {
-    //   console.log(err);
-    // }
     this.props.dispatch(thunk_action_restaurant());
   };
 
   render() {
-    const data = ["a", "b", "c"];
-    const options = data.map(d => <Option key={d}>{d}</Option>);
+    const { restaurants } = this.props;
+    console.log(restaurants.restaurantData);
+    const restaurantName = restaurants.restaurantData.map(
+      restaurantDetail => restaurantDetail.name
+    );
+    const options1 = restaurants.district.map(d => (
+      <Option key={d}>{d}</Option>
+    ));
+    const options2 = restaurantName.map(d => <Option key={d}>{d}</Option>);
     return (
       <div className="bg-page">
         <Navbar />
@@ -39,11 +61,13 @@ export class HomePage extends Component {
                   // value={this.state.value}
                   // placeholder={this.props.placeholder}
                   style={{ width: "85%" }}
-                  showArrow={false}
-                  filterOption={false}
+                  showArrow
+                  filterOption
+                  suffixIcon={<FaLocationArrow />}
                   notFoundContent={null}
+                  onSelect={this.handleSelected("districtSelected")}
                 >
-                  {options}
+                  {options1}
                 </Select>
                 <Select
                   showSearch
@@ -51,12 +75,23 @@ export class HomePage extends Component {
                   // value={this.state.value}
                   // placeholder={this.props.placeholder}
                   style={{ width: "85%", marginTop: 10 }}
-                  showArrow={false}
-                  filterOption={false}
+                  onSearch={this.handleSelected("searchText")}
+                  showArrow
+                  filterOption
                   notFoundContent={null}
+                  onInputKeyDown={this.handleSearch}
+                  suffixIcon={<FaSearch />}
                 >
-                  {options}
+                  {options2}
                 </Select>
+                <Button
+                  block
+                  type="primary"
+                  style={{ width: "85%", marginTop: 10 }}
+                  onClick={this.handleCTlick}
+                >
+                  Search
+                </Button>
               </Col>
             </Row>
           </div>
@@ -65,24 +100,64 @@ export class HomePage extends Component {
           <div>
             <Row style={{ margin: "15px 0" }}>
               <Col span={6} className={style.Flex}>
-                <div className={style.Circle}>
-                  <Icon type="search" />
-                </div>
+                <Row type="flex" justify="center">
+                  <Col>
+                    <div
+                      className={style.Circle}
+                      style={{ backgroundColor: "#2eba69" }}
+                    >
+                      <MdRestaurant />
+                    </div>
+                  </Col>
+                  <Col>
+                    <p>Poppular</p>
+                  </Col>
+                </Row>
               </Col>
               <Col span={6} className={style.Flex}>
-                <div className={style.Circle}>
-                  <Icon type="search" />
-                </div>
+                <Row type="flex" justify="center">
+                  <Col>
+                    <div
+                      className={style.Circle}
+                      style={{ backgroundColor: "#797CE8" }}
+                    >
+                      <GiBookCover />
+                    </div>
+                  </Col>
+                  <Col>
+                    <p>Categories</p>
+                  </Col>
+                </Row>
               </Col>
               <Col span={6} className={style.Flex}>
-                <div className={style.Circle}>
-                  <Icon type="search" />
-                </div>
+                <Row type="flex" justify="center">
+                  <Col>
+                    <div
+                      className={style.Circle}
+                      style={{ backgroundColor: "#7997E8" }}
+                    >
+                      <Icon type="like" />
+                    </div>
+                  </Col>
+                  <Col>
+                    <p>Top Star</p>
+                  </Col>
+                </Row>
               </Col>
               <Col span={6} className={style.Flex}>
-                <div className={style.Circle}>
-                  <Icon type="search" />
-                </div>
+                <Row type="flex" justify="center">
+                  <Col>
+                    <div
+                      className={style.Circle}
+                      style={{ backgroundColor: "#91CCFF" }}
+                    >
+                      <MdRateReview />
+                    </div>
+                  </Col>
+                  <Col>
+                    <p>Top reviews</p>
+                  </Col>
+                </Row>
               </Col>
             </Row>
           </div>
@@ -94,11 +169,18 @@ export class HomePage extends Component {
               <p>See all</p>
             </div>
             <div className={style.CardContainer}>
-              <Row>
-                <Col className={style.CardRestaurant}>
-                  <RestaurantMiniCard />
-                </Col>
-              </Row>
+              {restaurants.restaurantData.map((restaurant, i) => (
+                <Row key={i + restaurant.name}>
+                  <Col className={style.CardRestaurant}>
+                    <RestaurantMiniCard
+                      restaurantName={restaurant.name}
+                      src={restaurant.image_url}
+                      rating={restaurant.rating}
+                      totalReviews={restaurant.total_review}
+                    />
+                  </Col>
+                </Row>
+              ))}
             </div>
           </div>
           <div>
@@ -116,7 +198,7 @@ export class HomePage extends Component {
 
 const mapStateToProps = state => {
   return {
-    restaurant: state.restaurant
+    restaurants: state.restaurant
   };
 };
 

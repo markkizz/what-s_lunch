@@ -36,7 +36,7 @@ export const search = keyword => ({
   keyword
 });
 
-// * FETCH ACTION CREATOR
+// * FETCH RESTAURANT ACTION CREATOR
 
 export const fetch_restaurant = () => {
   return {
@@ -56,6 +56,8 @@ export const receive_error = () => {
     type: "RECEIVE_ERROR"
   };
 };
+
+// * CALL FUNC THUNK
 
 export const thunk_action_restaurant = () => (dispatch, getState) => {
   console.log("inside thunk action");

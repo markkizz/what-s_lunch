@@ -9,14 +9,14 @@ export class PrivateRoutes extends Component {
   };
 
   componentDidMount = () => {
-    let role = this.props.role;
+    const role = this.props.role;
     this.setState(state => ({
       allowedRoutes: rolesConfig[role].routes
     }));
   };
 
   render() {
-    const { role } = this.props;
+    // const { role } = this.props;
     const { allowedRoutes } = this.state;
     return (
       <>
@@ -35,3 +35,10 @@ export class PrivateRoutes extends Component {
 }
 
 export default withRouter(PrivateRoutes);
+
+// {/* <Route
+//               exact
+//               path={route.path + "/:restaurantName?/:district?"}
+//               component={AllRoutes[route.component]}
+//               key={i + route.path}
+//             />  */}

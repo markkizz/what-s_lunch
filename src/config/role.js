@@ -17,7 +17,7 @@ const pageComponents = {
   },
   search: {
     component: "Search",
-    path: "/search"
+    path: "/search/:restaurantName?/:district?"
   },
   restaurantDetail: {
     component: "RestaurantDetail",
