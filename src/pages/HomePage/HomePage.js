@@ -1,8 +1,8 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 import { thunk_action_restaurant } from "../../redux/actions/actions";
-import { Row, Col, Icon, Input, Select, Button } from "antd";
+import { Row, Col, Icon, Select, Button } from "antd";
 import Navbar from "../../components/Navbar/Navbar";
 import style from "./HomePage.module.css";
 import RestaurantMiniCard from "../../components/RestaurantMiniCard/RestaurantMiniCard";
@@ -25,12 +25,19 @@ export class HomePage extends Component {
     }));
   };
 
+  handleSearch = value => {
+    this.setState(state => ({
+      searchText: value
+    }));
+  };
+
   handleClick = () => {
     const { districtSelected, searchText } = this.state;
+    console.log(districtSelected, searchText);
     if (districtSelected && searchText) {
-      this.props.history.push(`/search/${searchText}/${districtSelected}`);
-    } else if (searchText) {
-      this.props.history.push(`/search/${searchText}`);
+      this.props.history.push(`/search/${districtSelected}?q=${searchText}`);
+    } else if (districtSelected) {
+      this.props.history.push(`/search/${districtSelected}`);
     }
   };
 
@@ -40,7 +47,6 @@ export class HomePage extends Component {
 
   render() {
     const { restaurants } = this.props;
-    console.log(restaurants.restaurantData);
     const restaurantName = restaurants.restaurantData.map(
       restaurantDetail => restaurantDetail.name
     );
@@ -58,7 +64,6 @@ export class HomePage extends Component {
                 <Select
                   showSearch
                   search
-                  // value={this.state.value}
                   // placeholder={this.props.placeholder}
                   style={{ width: "85%" }}
                   showArrow
@@ -72,14 +77,13 @@ export class HomePage extends Component {
                 <Select
                   showSearch
                   search
-                  // value={this.state.value}
                   // placeholder={this.props.placeholder}
                   style={{ width: "85%", marginTop: 10 }}
-                  onSearch={this.handleSelected("searchText")}
+                  onSearch={this.handleSearch}
                   showArrow
                   filterOption
+                  mode="combobox"
                   notFoundContent={null}
-                  onInputKeyDown={this.handleSearch}
                   suffixIcon={<FaSearch />}
                 >
                   {options2}
@@ -88,7 +92,7 @@ export class HomePage extends Component {
                   block
                   type="primary"
                   style={{ width: "85%", marginTop: 10 }}
-                  onClick={this.handleCTlick}
+                  onClick={this.handleClick}
                 >
                   Search
                 </Button>

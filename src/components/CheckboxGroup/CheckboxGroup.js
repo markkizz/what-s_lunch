@@ -9,9 +9,9 @@ export default ({ options, ...props }) => (
     className="ant-checkbox-group"
     style={{ display: "inline-block", marginRight: 10 }}
   >
-    {options.map(label => (
+    {options.map((label, i) => (
       <Checkbox
-        key={label}
+        key={i + label}
         style={{ display: "block", marginLeft: 0 }}
         // disabled={disabled || false}
         label={label}

@@ -13,9 +13,12 @@ export const SEARCH = "SEARCH";
 export const FETCH_RESTAURANT = "FETCH_RESTAURANT";
 export const FETCHED_RESTAURANT = "FETCHED_RESTAURANT";
 export const RECEIVE_ERROR = "RECEIVE_ERROR";
+export const ISSEARCHPAGE = "ISSEARCHPAGE";
+export const NOTSEARCHPAGE = "NOTSEARCHPAGE";
+export const FETCHED_SEARCH_RESTAURANT = "FETCHED_SEARCH_RESTAURANT";
 
 // * ACTION CREATOR *
-
+/* user */
 export function login(user, token) {
   setLocalStorage(token);
   return {
@@ -31,9 +34,14 @@ export function logout() {
   };
 }
 
-export const search = keyword => ({
-  type: "SEARCH",
+/* search */
+export const isSearchPage = keyword => ({
+  type: "ISSEARCHPAGE",
   keyword
+});
+
+export const notSearchPage = () => ({
+  type: "NOTSEARCHPAGE"
 });
 
 // * FETCH RESTAURANT ACTION CREATOR
@@ -50,6 +58,11 @@ export const receive_restaurant = data => {
     data
   };
 };
+
+export const receive_search_restaurant = searchData => ({
+  type: "FETCHED_SEARCH_RESTAURANT",
+  searchData
+});
 
 export const receive_error = () => {
   return {
@@ -69,4 +82,25 @@ export const thunk_action_restaurant = () => (dispatch, getState) => {
       dispatch(receive_restaurant(data));
     })
     .catch(err => console.log(err));
+};
+
+export const thunk_action_search_restaurant = (district, restaurantName) => (
+  dispatch,
+  getState
+) => {
+  console.log("inside thunk action");
+  if (!restaurantName) {
+    return axios
+      .get(`/searchRestaurant/${district}`)
+      .then(({ data }) => {
+        dispatch(receive_search_restaurant(data));
+      })
+      .catch(err => console.error(err));
+  }
+  return axios
+    .get(`/searchRestaurant/${district}?q=${restaurantName}`)
+    .then(({ data }) => {
+      dispatch(receive_search_restaurant(data));
+    })
+    .catch(err => console.error(err));
 };

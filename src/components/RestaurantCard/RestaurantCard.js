@@ -1,13 +1,14 @@
 import React, { Component } from "react";
+import { Link } from "react-router-dom";
 import style from "./RestaurantCard.module.css";
 import { Card, Row, Col, Button, Rate, Tag, Icon } from "antd";
+import { FaQuoteLeft } from "react-icons/fa";
 
 export class RestaurantCard extends Component {
   render() {
     let text =
       "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Alias nam assumenda architecto sed quae culpa ab soluta. Suscipit ratione dicta dignissimos commodi quidem. Perspiciatis ullam vero asperiores cumque quae vel.";
     let maxChar = 95;
-    console.log("len", text.length > maxChar);
     return (
       <>
         <Card
@@ -46,10 +47,11 @@ export class RestaurantCard extends Component {
             <Row type="flex" justify="center">
               <Col span={24}>
                 <p>
+                  <FaQuoteLeft style={{ color: "#2eba69" }} />
                   {text.length > maxChar
                     ? text.substr(0, maxChar) + "... "
                     : "false"}
-                  {text.length > maxChar && <a href="#">more</a>}
+                  {text.length > maxChar && <Link> more </Link>}
                 </p>
               </Col>
             </Row>
@@ -58,12 +60,16 @@ export class RestaurantCard extends Component {
             <Row type="flex" justify="center">
               <Col span={12}>
                 <Button className={style.ButtonCustom}>
-                  <p><Icon type="edit" /> Review</p>
+                  <p>
+                    <Icon type="edit" /> Review
+                  </p>
                 </Button>
               </Col>
               <Col span={12}>
                 <Button type="primary" style={{ padding: "0.25em 2.25em" }}>
-                  <p><Icon type="schedule" /> Booking</p>
+                  <p>
+                    <Icon type="schedule" /> Booking
+                  </p>
                 </Button>
               </Col>
             </Row>

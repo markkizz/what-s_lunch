@@ -34,7 +34,6 @@ export class Navbar extends Component {
   state = {
     dropdownLocation: false,
     dropdownUser: false,
-    isSearch: true,
     mobileScreen: false,
     modalLoginVisible: false
   };
@@ -83,10 +82,10 @@ export class Navbar extends Component {
     const {
       dropdownLocation,
       dropdownUser,
-      isSearch,
       mobileScreen,
       modalLoginVisible
     } = this.state;
+    const { isSearchPage, keyword } = this.props.search;
     console.log("isMobileScreen", mobileScreen);
     return (
       <>
@@ -101,12 +100,12 @@ export class Navbar extends Component {
                 />
               </Col>
               <Col span={4}>
-                {isSearch && (
+                {isSearchPage && (
                   <ButtonLocation>
                     <span style={{ color: "#2eba69" }}>
                       <Icon type="search" />
                     </span>
-                    <span>Pathumwan</span>
+                    <span>{keyword}</span>
                   </ButtonLocation>
                 )}
               </Col>
@@ -127,7 +126,8 @@ export class Navbar extends Component {
 
 const mapStateToProps = state => {
   return {
-    user: state.user
+    user: state.user,
+    search: state.search
   };
 };
 
