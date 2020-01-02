@@ -52,7 +52,14 @@ export class Search extends Component {
                       className={style.JustifyCenter}
                       key={i + restaurant.name}
                     >
-                      <RestaurantCard />
+                      <RestaurantCard
+                        restaurantName={restaurant.name}
+                        src={restaurant.image_url}
+                        rating={restaurant.rating}
+                        totalReviews={restaurant.total_review}
+                        description={restaurant.description}
+                        priceRange={restaurant.price_range}
+                      />
                     </Col>
                   ))}
                 </Row>

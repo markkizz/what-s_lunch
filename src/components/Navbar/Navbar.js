@@ -101,7 +101,7 @@ export class Navbar extends Component {
               </Col>
               <Col span={4}>
                 {isSearchPage && (
-                  <ButtonLocation>
+                  <ButtonLocation onClick={this.handleShow("dropdownLocation")}>
                     <span style={{ color: "#2eba69" }}>
                       <Icon type="search" />
                     </span>

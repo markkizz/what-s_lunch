@@ -22,7 +22,18 @@ const menu = (
 );
 
 export class FilterBar extends Component {
+  state = {
+    modalVisible: false
+  };
+
+  handleShow = () => {
+    this.setState(state => ({
+      modalVisible: !state.modalVisible
+    }));
+  };
+
   render() {
+    const { modalVisible } = this.state;
     return (
       <>
         <Row
@@ -33,7 +44,11 @@ export class FilterBar extends Component {
           gutter={[16]}
         >
           <Col className={style.ColCustom}>
-            <Button type="primary" className={style.ButtonCustom}>
+            <Button
+              type="primary"
+              className={style.ButtonCustom}
+              onClick={this.handleShow}
+            >
               <FaSlidersH />
             </Button>
           </Col>
@@ -68,7 +83,7 @@ export class FilterBar extends Component {
             </Button>
           </Col>
         </Row>
-        <ModalFilter />
+        <ModalFilter visible={modalVisible} handleShow={this.handleShow} />
       </>
     );
   }

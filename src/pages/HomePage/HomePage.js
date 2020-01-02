@@ -33,7 +33,6 @@ export class HomePage extends Component {
 
   handleClick = () => {
     const { districtSelected, searchText } = this.state;
-    console.log(districtSelected, searchText);
     if (districtSelected && searchText) {
       this.props.history.push(`/search/${districtSelected}?q=${searchText}`);
     } else if (districtSelected) {
@@ -79,7 +78,7 @@ export class HomePage extends Component {
                   search
                   // placeholder={this.props.placeholder}
                   style={{ width: "85%", marginTop: 10 }}
-                  onSearch={this.handleSearch}
+                  onChange={this.handleSearch}
                   showArrow
                   filterOption
                   mode="combobox"

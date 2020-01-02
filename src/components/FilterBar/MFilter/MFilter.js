@@ -29,12 +29,11 @@ const marks = {
   100: "$$$$"
 };
 
-
-function MFilter() {
+function MFilter(props) {
   return (
     <>
       <Modal
-
+        visible={props.visible}
         title={
           <Title level={3} style={{ margin: 0 }}>
             Filter
@@ -43,14 +42,13 @@ function MFilter() {
         footer={null}
         width={320}
         closable
+        onCancel={props.handleShow}
       >
         <Row>
           {/* Distict header */}
           <Col span={24}>
             <div className={`text-left ${style.TextHead}`}>Distict</div>
-            <div className={`text-right text-muted`}>
-              Clear Selection
-            </div>
+            <div className={`text-right text-muted`}>Clear Selection</div>
           </Col>
           {/* button selection */}
           <Col span={24}>
@@ -73,9 +71,7 @@ function MFilter() {
           {/* Cuisine header */}
           <Col span={24}>
             <div className={`text-left ${style.TextHead}`}>Cuisine</div>
-            <div className={`text-right text-muted`}>
-              Clear Selection
-            </div>
+            <div className={`text-right text-muted`}>Clear Selection</div>
           </Col>
           {/* button selection */}
           <Col span={24}>
@@ -103,7 +99,13 @@ function MFilter() {
           <Col span={24}>
             <Row type="flex" align="middle" className={style.ButtonSelectC}>
               <Col span={24} style={{ width: "96%", marginBottom: "30px" }}>
-                <Slider range marks={marks} step={null} defaultValue={[33, 66]} tipFormatter={null} />
+                <Slider
+                  range
+                  marks={marks}
+                  step={null}
+                  defaultValue={[33, 66]}
+                  tipFormatter={null}
+                />
               </Col>
             </Row>
           </Col>
@@ -113,7 +115,12 @@ function MFilter() {
             </Button>
           </Col>
           <Col span={24}>
-            <Button block size="large" className="btn-primary-transparent" style={{marginTop: 15}}>
+            <Button
+              block
+              size="large"
+              className="btn-primary-transparent"
+              style={{ marginTop: 15 }}
+            >
               cancel
             </Button>
           </Col>

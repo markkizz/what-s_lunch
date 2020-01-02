@@ -5,6 +5,7 @@
   width: 95vw;
   height: 80vh;
   background-color: white;
+  z-index: 2;
 }
 
 .BgDropdown::before {
@@ -43,5 +44,3 @@
 .DropdownLocationCard:last-child {
   border: none;
 }
-
-
