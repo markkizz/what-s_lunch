@@ -32,7 +32,7 @@ const marks = {
 };
 
 /**
- * @param `/search/filter?cuisine=keyword1&...cuisine?district=keyword&...district&price_range=from&price_range=to`
+ * @param `/search/filter?cuisine=keyword1,keyword2,..?district=keyword1,keyword2,... &price_range=from&price_range=to`
  * cuisine = [key1, key2 ,key3, ...]
  * district = [key1, key2 ,key3, ...]
  * price range = [$$, $$$$]

@@ -77,7 +77,7 @@ export const thunk_action_restaurant = () => (dispatch, getState) => {
   dispatch(fetch_restaurant());
   const { restaurantData } = getState().restaurant;
   if (!Array.isArray(restaurantData) || !restaurantData.length) {
-    return axios
+    axios
       .get("/allRestaurants")
       .then(result => result.data)
       .then(data => {

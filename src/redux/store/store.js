@@ -1,6 +1,7 @@
 import { createStore, applyMiddleware, compose } from "redux";
 import reducers from "../reducers/reducers";
 import thunk from "redux-thunk";
+import logger from "redux-logger";
 
 const saveState = state => {
   try {
@@ -26,10 +27,15 @@ const loadState = () => {
 
 const persistStore = loadState();
 
+const middlewares = [logger, thunk];
+
 const store = createStore(
   reducers,
   persistStore,
-  compose(applyMiddleware(thunk), window.__REDUX_DEVTOOLS_EXTENSION__())
+  compose(
+    applyMiddleware(...middlewares),
+    window.__REDUX_DEVTOOLS_EXTENSION__()
+  )
 );
 
 store.subscribe(() => {
