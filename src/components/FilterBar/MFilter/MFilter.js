@@ -1,5 +1,6 @@
-import React from "react";
+import React, { Component } from "react";
 import { connect } from "react-redux";
+import { withRouter } from "react-router-dom";
 import { Row, Col, Modal, Typography, Divider, Slider, Button } from "antd";
 import style from "./MFilter.module.css";
 import styled from "styled-components";
@@ -30,109 +31,145 @@ const marks = {
   100: "$$$$"
 };
 
-function MFilter(props) {
-  return (
-    <>
-      <Modal
-        visible={props.visible}
-        title={
-          <Title level={3} style={{ margin: 0 }}>
-            Filter
-          </Title>
-        }
-        footer={null}
-        width={320}
-        closable
-        onCancel={props.handleShow}
-      >
-        <Row>
-          {/* Distict header */}
-          <Col span={24}>
-            <div className={`text-left ${style.TextHead}`}>Distict</div>
-            <div className={`text-right text-muted`}>Clear Selection</div>
-          </Col>
-          {/* button selection */}
-          <Col span={24}>
-            <Row type="flex" align="middle" className={style.ButtonSelectC}>
-              <Col>
-                <ButtonSelect active>test</ButtonSelect>
-              </Col>
-              <Col>
-                <ButtonSelect>test</ButtonSelect>
-              </Col>
-              <Col>
-                <ButtonSelect>test</ButtonSelect>
-              </Col>
-              <Col>
-                <ButtonSelect>test</ButtonSelect>
-              </Col>
-            </Row>
-          </Col>
-          <Divider />
-          {/* Cuisine header */}
-          <Col span={24}>
-            <div className={`text-left ${style.TextHead}`}>Cuisine</div>
-            <div className={`text-right text-muted`}>Clear Selection</div>
-          </Col>
-          {/* button selection */}
-          <Col span={24}>
-            <Row type="flex" align="middle" className={style.ButtonSelectC}>
-              <Col>
-                <ButtonSelect active>test</ButtonSelect>
-              </Col>
-              <Col>
-                <ButtonSelect>test</ButtonSelect>
-              </Col>
-              <Col>
-                <ButtonSelect>test</ButtonSelect>
-              </Col>
-              <Col>
-                <ButtonSelect>testtesttesttest</ButtonSelect>
-              </Col>
-            </Row>
-          </Col>
-          <Divider />
-          {/* Price header */}
-          <Col span={24}>
-            <div className={`text-left ${style.TextHead}`}>Price</div>
-          </Col>
-          {/* button selection */}
-          <Col span={24}>
-            <Row type="flex" align="middle" className={style.ButtonSelectC}>
-              <Col span={24} style={{ width: "96%", marginBottom: "30px" }}>
-                <Slider
-                  range
-                  marks={marks}
-                  step={null}
-                  defaultValue={[33, 66]}
-                  tipFormatter={null}
-                />
-              </Col>
-            </Row>
-          </Col>
-          <Col span={24}>
-            <Button block size="large" type="primary">
-              Apply
-            </Button>
-          </Col>
-          <Col span={24}>
-            <Button
-              block
-              size="large"
-              className="btn-primary-transparent"
-              style={{ marginTop: 15 }}
-            >
-              cancel
-            </Button>
-          </Col>
-        </Row>
-      </Modal>
-    </>
-  );
+/**
+ * @param `/search/filter?cuisine=keyword1&...cuisine?district=keyword&...district&price_range=from&price_range=to`
+ * cuisine = [key1, key2 ,key3, ...]
+ * district = [key1, key2 ,key3, ...]
+ * price range = [$$, $$$$]
+ */
+
+export class MFilter extends Component {
+  state = {
+    districtSelected: [],
+    cuisineSelected: [],
+    priceRange: []
+  };
+
+  selectItem = (component, targetName) => {
+    this.setState(state => ({
+      [component]: [...state[component], targetName]
+    }));
+  };
+
+  deSelectItem = (component, targetName) => {
+    this.setState(state => ({
+      [component]: state[component].filter(name => name !== targetName)
+    }));
+  };
+
+  handleSliderChange = arrValue => {
+    const arrValueParse = arrValue.map(v => marks[v]);
+    this.setState(state => ({
+      priceRange: arrValueParse
+    }));
+  };
+
+  render() {
+    const { cuisine, district } = this.props.restaurant;
+    const { visible, handleShow } = this.props;
+    const { districtSelected, cuisineSelected } = this.state;
+    return (
+      <>
+        <Modal
+          visible={visible}
+          title={
+            <Title level={3} style={{ margin: 0 }}>
+              Filter
+            </Title>
+          }
+          footer={null}
+          width={320}
+          closable
+          onCancel={handleShow}
+        >
+          <Row>
+            <Col span={24}>
+              <div className={`text-left ${style.TextHead}`}>Distict</div>
+              <div className={`text-right text-muted`}>Clear Selection</div>
+            </Col>
+            <Col span={24}>
+              <Row type="flex" align="middle" className={style.ButtonSelectC}>
+                {district.map((name, i) => (
+                  <Col key={i + name}>
+                    <ButtonSelect
+                      active={districtSelected.includes(name)}
+                      onClick={() =>
+                        districtSelected.includes(name)
+                          ? this.deSelectItem("districtSelected", name)
+                          : this.selectItem("districtSelected", name)
+                      }
+                    >
+                      {name}
+                    </ButtonSelect>
+                  </Col>
+                ))}
+              </Row>
+            </Col>
+            <Divider />
+            <Col span={24}>
+              <div className={`text-left ${style.TextHead}`}>Cuisine</div>
+              <div className={`text-right text-muted`}>Clear Selection</div>
+            </Col>
+            <Col span={24}>
+              <Row type="flex" align="middle" className={style.ButtonSelectC}>
+                {cuisine.map((name, i) => (
+                  <Col key={i + name}>
+                    <ButtonSelect
+                      active={cuisineSelected.includes(name)}
+                      onClick={() =>
+                        cuisineSelected.includes(name)
+                          ? this.deSelectItem("cuisineSelected", name)
+                          : this.selectItem("cuisineSelected", name)
+                      }
+                    >
+                      {name}
+                    </ButtonSelect>
+                  </Col>
+                ))}
+              </Row>
+            </Col>
+            <Divider />
+            <Col span={24}>
+              <div className={`text-left ${style.TextHead}`}>Price</div>
+            </Col>
+            <Col span={24}>
+              <Row type="flex" align="middle" className={style.ButtonSelectC}>
+                <Col span={24} style={{ width: "96%", marginBottom: "30px" }}>
+                  <Slider
+                    range
+                    marks={marks}
+                    step={null}
+                    defaultValue={[33, 66]}
+                    tipFormatter={null}
+                    onChange={this.handleSliderChange}
+                  />
+                </Col>
+              </Row>
+            </Col>
+            <Col span={24}>
+              <Button block size="large" type="primary">
+                Apply
+              </Button>
+            </Col>
+            <Col span={24}>
+              <Button
+                block
+                size="large"
+                className="btn-primary-transparent"
+                style={{ marginTop: 15 }}
+              >
+                cancel
+              </Button>
+            </Col>
+          </Row>
+        </Modal>
+      </>
+    );
+  }
 }
 
 const mapStateToProps = state => ({
   restaurant: state.restaurant
 });
 
-export default connect(mapStateToProps)(MFilter);
+export default withRouter(connect(mapStateToProps)(MFilter));

@@ -40,8 +40,6 @@ export class FilterBar extends Component {
 
   render() {
     const { modalVisible } = this.state;
-    const { restaurantName } = this.props.restaurant;
-    console.log(restaurantName);
     return (
       <>
         <Row

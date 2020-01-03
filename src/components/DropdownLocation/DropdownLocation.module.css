@@ -20,6 +20,7 @@
   top: -5px;
   left: 50%;
   transform: rotate(45deg);
+  z-index: 2;
 }
 
 .InputCustom {
