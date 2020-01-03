@@ -1,7 +1,13 @@
 import React, { Component } from "react";
-import { Link, Redirect } from "react-router-dom";
+// import { Link, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 import { thunk_action_restaurant } from "../../redux/actions/actions";
+import { createStructuredSelector } from "reselect";
+import {
+  selectRestaurantData,
+  selectRestaurantName,
+  selectDistrictRestaurant
+} from "../../redux/selector/restaurant.selector";
 import { Row, Col, Icon, Select, Button } from "antd";
 import Navbar from "../../components/Navbar/Navbar";
 import style from "./HomePage.module.css";
@@ -47,13 +53,8 @@ export class HomePage extends Component {
   };
 
   render() {
-    const { restaurants } = this.props;
-    const restaurantName = restaurants.restaurantData.map(
-      restaurantDetail => restaurantDetail.name
-    );
-    const options1 = restaurants.district.map(d => (
-      <Option key={d}>{d}</Option>
-    ));
+    const { restaurants, restaurantName, restaurantDistrict } = this.props;
+    const options1 = restaurantDistrict.map(d => <Option key={d}>{d}</Option>);
     const options2 = restaurantName.map(d => <Option key={d}>{d}</Option>);
     return (
       <div className="bg-page">
@@ -174,7 +175,7 @@ export class HomePage extends Component {
               <p>See all</p>
             </div>
             <div className={style.CardContainer}>
-              {restaurants.restaurantData.map((restaurant, i) => (
+              {restaurants.map((restaurant, i) => (
                 <Row key={i + restaurant.name}>
                   <Col className={style.CardRestaurant}>
                     <RestaurantMiniCard
@@ -201,10 +202,10 @@ export class HomePage extends Component {
   }
 }
 
-const mapStateToProps = state => {
-  return {
-    restaurants: state.restaurant
-  };
-};
+const mapStateToProps = createStructuredSelector({
+  restaurants: selectRestaurantData,
+  restaurantName: selectRestaurantName,
+  restaurantDistrict: selectDistrictRestaurant
+});
 
 export default connect(mapStateToProps, null)(HomePage);

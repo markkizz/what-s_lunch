@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Route, withRouter, Redirect } from "react-router-dom";
+import { Route, withRouter } from "react-router-dom";
 import rolesConfig from "../../config/role";
 import * as AllRoutes from "./AllRoutes";
 
