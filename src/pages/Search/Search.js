@@ -3,28 +3,30 @@ import { connect } from "react-redux";
 import {
   isSearchPage,
   notSearchPage,
-  thunk_action_search_restaurant
+  thunk_action_search_restaurant,
+  thunk_action_restaurant
 } from "../../redux/actions/actions";
+import qs from "query-string";
 import Navbar from "../../components/Navbar/Navbar";
 import style from "./Search.module.css";
 import FilterBar from "../../components/FilterBar/FilterBar";
 import RestaurantCard from "../../components/RestaurantCard/RestaurantCard";
 import FilterDesktop from "../../components/FilterDesktop/FilterDesktop";
 import { Row, Col } from "antd";
-import queryMatch from "../../utils/queryMatch.util";
 
 export class Search extends Component {
   // TODO: finish filter restaurant card
 
   componentDidMount = () => {
-    const { district } = this.props.match.params;
-    const query = this.props.location.search;
-    let restaurantName = "";
-    if (query) restaurantName = queryMatch(query);
-    this.props.dispatch(isSearchPage(district));
-    this.props.dispatch(
-      thunk_action_search_restaurant(district, restaurantName)
-    );
+    const { district, keyword, q } = qs.parse(this.props.location.search);
+    if (district && keyword) {
+      this.props.dispatch(isSearchPage(district));
+      this.props.dispatch(thunk_action_search_restaurant(district, keyword));
+    } else if (q) {
+      this.props.dispatch(isSearchPage(q));
+      this.props.dispatch(thunk_action_search_restaurant(null, null, q));
+    }
+    this.props.dispatch(thunk_action_restaurant());
   };
 
   componentWillUnmount = () => {

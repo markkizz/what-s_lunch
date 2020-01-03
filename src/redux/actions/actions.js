@@ -75,30 +75,41 @@ export const receive_error = () => {
 export const thunk_action_restaurant = () => (dispatch, getState) => {
   console.log("inside thunk action");
   dispatch(fetch_restaurant());
-  return axios
-    .get("/allRestaurants")
-    .then(result => result.data)
-    .then(data => {
-      dispatch(receive_restaurant(data));
-    })
-    .catch(err => console.log(err));
+  const { restaurantData } = getState().restaurant;
+  if (!Array.isArray(restaurantData) || !restaurantData.length) {
+    return axios
+      .get("/allRestaurants")
+      .then(result => result.data)
+      .then(data => {
+        dispatch(receive_restaurant(data));
+      })
+      .catch(err => console.log(err));
+  }
 };
 
-export const thunk_action_search_restaurant = (district, restaurantName) => (
+export const thunk_action_search_restaurant = (district, keyword, q) => (
   dispatch,
   getState
 ) => {
   console.log("inside thunk action");
-  if (!restaurantName) {
+  if (!keyword && district) {
     return axios
-      .get(`/searchRestaurant/${district}`)
+      .get(`/searchRestaurant?district=${district}`)
+      .then(({ data }) => {
+        dispatch(receive_search_restaurant(data));
+      })
+      .catch(err => console.error(err));
+  }
+  if (!keyword && !district && q) {
+    return axios
+      .get(`/searchRestaurant?q=${q}`)
       .then(({ data }) => {
         dispatch(receive_search_restaurant(data));
       })
       .catch(err => console.error(err));
   }
   return axios
-    .get(`/searchRestaurant/${district}?q=${restaurantName}`)
+    .get(`/searchRestaurant?district=${district}&keyword=${keyword}`)
     .then(({ data }) => {
       dispatch(receive_search_restaurant(data));
     })

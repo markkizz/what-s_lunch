@@ -34,9 +34,11 @@ export class HomePage extends Component {
   handleClick = () => {
     const { districtSelected, searchText } = this.state;
     if (districtSelected && searchText) {
-      this.props.history.push(`/search/${districtSelected}?q=${searchText}`);
+      this.props.history.push(
+        `/search?district=${districtSelected}&keyword=${searchText}`
+      );
     } else if (districtSelected) {
-      this.props.history.push(`/search/${districtSelected}`);
+      this.props.history.push(`/search?district=${districtSelected}`);
     }
   };
 

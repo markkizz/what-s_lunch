@@ -86,6 +86,7 @@ export class Navbar extends Component {
       modalLoginVisible
     } = this.state;
     const { isSearchPage, keyword } = this.props.search;
+    console.log(this.props.search);
     console.log("isMobileScreen", mobileScreen);
     return (
       <>

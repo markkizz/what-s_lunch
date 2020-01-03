@@ -1,4 +1,5 @@
 import React from "react";
+import { connect } from "react-redux";
 import { Row, Col, Modal, Typography, Divider, Slider, Button } from "antd";
 import style from "./MFilter.module.css";
 import styled from "styled-components";
@@ -130,4 +131,8 @@ function MFilter(props) {
   );
 }
 
-export default MFilter;
+const mapStateToProps = state => ({
+  restaurant: state.restaurant
+});
+
+export default connect(mapStateToProps)(MFilter);

@@ -9,6 +9,7 @@ import {
 
 const initialState = {
   restaurantData: [],
+  restaurantName: [],
   popularRestaurant: [],
   cuisine: [],
   district: [],
@@ -28,12 +29,15 @@ const restaurantReducer = (state = initialState, action) => {
       const popularRestaurant = action.data.filter(
         restaurant => restaurant.rating >= popularRating
       );
+      const restaurantName = action.data.map(restaurant => restaurant.name);
+      const uniqrestaurantName = [...new Set(restaurantName)];
       const allCuisine = action.data.map(restaurant => restaurant.cuisine);
       const uniqCuisine = [...new Set(allCuisine)];
       const district = action.data.map(restaurant => restaurant.district);
       return {
         ...state,
         restaurantData: action.data,
+        restaurantName: uniqrestaurantName,
         popularRestaurant,
         cuisine: uniqCuisine,
         district,

@@ -3,9 +3,11 @@
   top: 65px;
   left: 0.6rem;
   width: 95vw;
-  height: 80vh;
+  height: 70vh;
+  padding-bottom: 50px;
   background-color: white;
   z-index: 2;
+  overflow: hidden;
 }
 
 .BgDropdown::before {
@@ -43,4 +45,9 @@
 
 .DropdownLocationCard:last-child {
   border: none;
+}
+
+.ContainerLocation {
+  height: 55vh;
+  overflow-x: hidden;
 }
