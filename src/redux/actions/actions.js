@@ -73,11 +73,11 @@ export const receive_error = () => {
 // * CALL FUNC THUNK
 
 export const thunk_action_restaurant = () => (dispatch, getState) => {
-  console.log("inside thunk action");
+  console.log("inside thunk restaurant action");
   dispatch(fetch_restaurant());
   const { restaurantData } = getState().restaurant;
-  if (!Array.isArray(restaurantData) || !restaurantData.length) {
-    axios
+  if (!Array.isArray(restaurantData) || restaurantData.length === 0) {
+    return axios
       .get("/allRestaurants")
       .then(result => result.data)
       .then(data => {
@@ -91,7 +91,7 @@ export const thunk_action_search_restaurant = (district, keyword, q) => (
   dispatch,
   getState
 ) => {
-  console.log("inside thunk action");
+  console.log("inside thunk search action");
   if (!keyword && district) {
     return axios
       .get(`/searchRestaurant?district=${district}`)
@@ -114,4 +114,23 @@ export const thunk_action_search_restaurant = (district, keyword, q) => (
       dispatch(receive_search_restaurant(data));
     })
     .catch(err => console.error(err));
+};
+
+export const thunk_action_filter_restaurant = (district, cuisine) => (
+  dispatch,
+  getState
+) => {
+  console.log("inside thunk filter action");
+  dispatch(isSearchPage("filter"));
+  if (district && !cuisine) {
+    return axios
+      .get(`/filterRestaurant?district=${district}`)
+      .then(({ data }) => dispatch(receive_search_restaurant(data)))
+      .catch(err => console.error(err));
+  } else {
+    return axios
+      .get(`/filterRestaurant?district=${district}&cuisine=${cuisine}`)
+      .then(({ data }) => dispatch(receive_search_restaurant(data)))
+      .catch(err => console.error(err));
+  }
 };

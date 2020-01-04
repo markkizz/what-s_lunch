@@ -37,6 +37,7 @@ const marks = {
 };
 
 /**
+ * TODO: make price range that can send request
  * @param `/search/filter?cuisine=keyword1,keyword2,..?district=keyword1,keyword2,... &price_range=from&price_range=to`
  * cuisine = [key1, key2 ,key3, ...]
  * district = [key1, key2 ,key3, ...]
@@ -71,6 +72,32 @@ export class MFilter extends Component {
     }));
   };
 
+  handleClearSelection = component => () => {
+    this.setState(state => ({
+      [component]: []
+    }));
+  };
+
+  handleApply = () => {
+    const { districtSelected, cuisineSelected } = this.state;
+    if (districtSelected.length > 0 || cuisineSelected.length > 0) {
+      const districtQuery = districtSelected.join(",");
+      const cuisineQuery = cuisineSelected.join(",");
+      this.props.history.push(
+        `/search/filter?district=${districtQuery}&cuisine=${cuisineQuery}`
+      );
+      window.location.reload(true);
+    }
+  };
+
+  handleCancle = () => {
+    this.props.handleShow();
+    this.setState(state => ({
+      districtSelected: [],
+      cuisineSelected: []
+    }));
+  };
+
   render() {
     const { visible, handleShow, district, cuisine } = this.props;
     const { districtSelected, cuisineSelected } = this.state;
@@ -91,7 +118,12 @@ export class MFilter extends Component {
           <Row>
             <Col span={24}>
               <div className={`text-left ${style.TextHead}`}>Distict</div>
-              <div className={`text-right text-muted`}>Clear Selection</div>
+              <div
+                className={`text-right text-muted`}
+                onClick={this.handleClearSelection("districtSelected")}
+              >
+                Clear Selection
+              </div>
             </Col>
             <Col span={24}>
               <Row type="flex" align="middle" className={style.ButtonSelectC}>
@@ -114,7 +146,12 @@ export class MFilter extends Component {
             <Divider />
             <Col span={24}>
               <div className={`text-left ${style.TextHead}`}>Cuisine</div>
-              <div className={`text-right text-muted`}>Clear Selection</div>
+              <div
+                className={`text-right text-muted`}
+                onClick={this.handleClearSelection("cuisineSelected")}
+              >
+                Clear Selection
+              </div>
             </Col>
             <Col span={24}>
               <Row type="flex" align="middle" className={style.ButtonSelectC}>
@@ -153,7 +190,12 @@ export class MFilter extends Component {
               </Row>
             </Col>
             <Col span={24}>
-              <Button block size="large" type="primary">
+              <Button
+                block
+                size="large"
+                type="primary"
+                onClick={this.handleApply}
+              >
                 Apply
               </Button>
             </Col>
@@ -163,6 +205,7 @@ export class MFilter extends Component {
                 size="large"
                 className="btn-primary-transparent"
                 style={{ marginTop: 15 }}
+                onClick={this.handleCancle}
               >
                 cancel
               </Button>

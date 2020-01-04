@@ -4,7 +4,8 @@ import {
   isSearchPage,
   notSearchPage,
   thunk_action_search_restaurant,
-  thunk_action_restaurant
+  thunk_action_restaurant,
+  thunk_action_filter_restaurant
 } from "../../redux/actions/actions";
 import { createStructuredSelector } from "reselect";
 import { selectSearchData } from "../../redux/selector/search.selector";
@@ -20,13 +21,18 @@ export class Search extends Component {
   // TODO: finish filter restaurant card
 
   componentDidMount = () => {
-    const { district, keyword, q } = qs.parse(this.props.location.search);
+    const { district, keyword, q, cuisine } = qs.parse(
+      this.props.location.search
+    );
+    const filter = this.props.match.params.option;
     if (district && keyword) {
       this.props.dispatch(isSearchPage(district));
       this.props.dispatch(thunk_action_search_restaurant(district, keyword));
     } else if (q) {
       this.props.dispatch(isSearchPage(q));
       this.props.dispatch(thunk_action_search_restaurant(null, null, q));
+    } else if (filter) {
+      this.props.dispatch(thunk_action_filter_restaurant(district, cuisine));
     }
     this.props.dispatch(thunk_action_restaurant());
   };

@@ -8,12 +8,12 @@ import {
   selectRestaurantName,
   selectDistrictRestaurant
 } from "../../redux/selector/restaurant.selector";
-import { Row, Col, Icon, Select, Button } from "antd";
+import { Row, Col, Select, Button } from "antd";
 import Navbar from "../../components/Navbar/Navbar";
 import style from "./HomePage.module.css";
 import RestaurantMiniCard from "../../components/RestaurantMiniCard/RestaurantMiniCard";
 import PostCard from "../../components/PostCard/PostCard";
-import { FaLocationArrow, FaSearch } from "react-icons/fa";
+import { FaLocationArrow, FaSearch, FaHeart } from "react-icons/fa";
 import { MdRestaurant, MdRateReview } from "react-icons/md";
 import { GiBookCover } from "react-icons/gi";
 
@@ -22,7 +22,13 @@ const { Option } = Select;
 export class HomePage extends Component {
   state = {
     districtSelected: "",
-    searchText: ""
+    searchText: "",
+    quickSearchs: [
+      { name: "Popular", iconName: <MdRestaurant />, color: "#9878FF" },
+      { name: "Categories", iconName: <GiBookCover />, color: "#797CE8" },
+      { name: "Top Star", iconName: <FaHeart />, color: "#7997E8" },
+      { name: "Top reviews", iconName: <MdRateReview />, color: "#91CCFF" }
+    ]
   };
 
   handleSelected = component => value => {
@@ -53,6 +59,7 @@ export class HomePage extends Component {
   };
 
   render() {
+    const { quickSearchs } = this.state;
     const { restaurants, restaurantName, restaurantDistrict } = this.props;
     const options1 = restaurantDistrict.map(d => <Option key={d}>{d}</Option>);
     const options2 = restaurantName.map(d => <Option key={d}>{d}</Option>);
@@ -105,66 +112,23 @@ export class HomePage extends Component {
         <div className="container">
           <div>
             <Row style={{ margin: "15px 0" }}>
-              <Col span={6} className={style.Flex}>
-                <Row type="flex" justify="center">
-                  <Col>
-                    <div
-                      className={style.Circle}
-                      style={{ backgroundColor: "#2eba69" }}
-                    >
-                      <MdRestaurant />
-                    </div>
-                  </Col>
-                  <Col>
-                    <p>Poppular</p>
-                  </Col>
-                </Row>
-              </Col>
-              <Col span={6} className={style.Flex}>
-                <Row type="flex" justify="center">
-                  <Col>
-                    <div
-                      className={style.Circle}
-                      style={{ backgroundColor: "#797CE8" }}
-                    >
-                      <GiBookCover />
-                    </div>
-                  </Col>
-                  <Col>
-                    <p>Categories</p>
-                  </Col>
-                </Row>
-              </Col>
-              <Col span={6} className={style.Flex}>
-                <Row type="flex" justify="center">
-                  <Col>
-                    <div
-                      className={style.Circle}
-                      style={{ backgroundColor: "#7997E8" }}
-                    >
-                      <Icon type="like" />
-                    </div>
-                  </Col>
-                  <Col>
-                    <p>Top Star</p>
-                  </Col>
-                </Row>
-              </Col>
-              <Col span={6} className={style.Flex}>
-                <Row type="flex" justify="center">
-                  <Col>
-                    <div
-                      className={style.Circle}
-                      style={{ backgroundColor: "#91CCFF" }}
-                    >
-                      <MdRateReview />
-                    </div>
-                  </Col>
-                  <Col>
-                    <p>Top reviews</p>
-                  </Col>
-                </Row>
-              </Col>
+              {quickSearchs.map((quickSearch, i) => (
+                <Col span={6} className={style.Flex}>
+                  <Row type="flex" justify="center">
+                    <Col>
+                      <div
+                        className={style.Circle}
+                        style={{ backgroundColor: quickSearch.color }}
+                      >
+                        {quickSearch.iconName}
+                      </div>
+                    </Col>
+                    <Col>
+                      <p>{quickSearch.name}</p>
+                    </Col>
+                  </Row>
+                </Col>
+              ))}
             </Row>
           </div>
           <div className={style.TrendingContainer}>
@@ -209,3 +173,49 @@ const mapStateToProps = createStructuredSelector({
 });
 
 export default connect(mapStateToProps, null)(HomePage);
+
+// {/* <Col span={6} className={style.Flex}>
+//                 <Row type="flex" justify="center">
+//                   <Col>
+//                     <div
+//                       className={style.Circle}
+//                       style={{ backgroundColor: "#797CE8" }}
+//                     >
+//                       <GiBookCover />
+//                     </div>
+//                   </Col>
+//                   <Col>
+//                     <p>Categories</p>
+//                   </Col>
+//                 </Row>
+//               </Col>
+//               <Col span={6} className={style.Flex}>
+//                 <Row type="flex" justify="center">
+//                   <Col>
+//                     <div
+//                       className={style.Circle}
+//                       style={{ backgroundColor: "#7997E8" }}
+//                     >
+//                       <Icon type="like" />
+//                     </div>
+//                   </Col>
+//                   <Col>
+//                     <p>Top Star</p>
+//                   </Col>
+//                 </Row>
+//               </Col>
+//               <Col span={6} className={style.Flex}>
+//                 <Row type="flex" justify="center">
+//                   <Col>
+//                     <div
+//                       className={style.Circle}
+//                       style={{ backgroundColor: "#91CCFF" }}
+//                     >
+//                       <MdRateReview />
+//                     </div>
+//                   </Col>
+//                   <Col>
+//                     <p>Top reviews</p>
+//                   </Col>
+//                 </Row>
+//               </Col> */}

@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import { Link } from "react-router-dom";
 import { Row, Col, Icon, Button, Avatar } from "antd";
 import styled from "styled-components";
 import style from "./Navbar.module.css";
@@ -92,13 +93,15 @@ export class Navbar extends Component {
         <nav>
           <div className="container">
             <Row type="flex" justify="space-between" align="middle">
-              <Col span={2}>
-                <img
-                  src={require("../../image/logo.png")}
-                  alt="what's lunch"
-                  className={style.LogoImg}
-                />
-              </Col>
+              <Link to="/">
+                <Col span={2}>
+                  <img
+                    src={require("../../image/logo.png")}
+                    alt="what's lunch"
+                    className={style.LogoImg}
+                  />
+                </Col>
+              </Link>
               <Col span={4}>
                 {isSearchPage && (
                   <ButtonLocation onClick={this.handleShow("dropdownLocation")}>
