@@ -5,7 +5,10 @@ import {
   notSearchPage,
   thunk_action_search_restaurant,
   thunk_action_restaurant,
-  thunk_action_filter_restaurant
+  thunk_action_filter_restaurant,
+  searchPopular,
+  searchTopStar,
+  searchTopReview
 } from "../../redux/actions/actions";
 import { createStructuredSelector } from "reselect";
 import { selectSearchData } from "../../redux/selector/search.selector";
@@ -16,29 +19,57 @@ import FilterBar from "../../components/FilterBar/FilterBar";
 import RestaurantCard from "../../components/RestaurantCard/RestaurantCard";
 import FilterDesktop from "../../components/FilterDesktop/FilterDesktop";
 import { Row, Col } from "antd";
+import {
+  selectPopularRestaurant,
+  selectTopStarRestaurant,
+  selectTopReviewRestaurant
+} from "../../redux/selector/restaurant.selector";
 
 export class Search extends Component {
-  // TODO: finish filter restaurant card
-
   componentDidMount = () => {
-    const { district, keyword, q, cuisine } = qs.parse(
+    this.props.fetchRestaurant();
+    const { district, keyword, q, cuisine, price_range } = qs.parse(
       this.props.location.search
     );
-    const filter = this.props.match.params.option;
+    const { option } = this.props.match.params;
+    const {
+      isSearchPage,
+      reqSearchRestaurant,
+      reqFilterRestaurant,
+      sendPopular,
+      sendTopStar,
+      sendTopReview,
+      popularRestaurant,
+      topStarRestaurant,
+      topReviewRestaurant
+    } = this.props;
     if (district && keyword) {
-      this.props.dispatch(isSearchPage(district));
-      this.props.dispatch(thunk_action_search_restaurant(district, keyword));
+      isSearchPage(district);
+      reqSearchRestaurant(district, keyword);
+      // this.props.dispatch(thunk_action_search_restaurant(district, keyword));
     } else if (q) {
-      this.props.dispatch(isSearchPage(q));
-      this.props.dispatch(thunk_action_search_restaurant(null, null, q));
-    } else if (filter) {
-      this.props.dispatch(thunk_action_filter_restaurant(district, cuisine));
+      isSearchPage(q);
+      reqSearchRestaurant(null, null, q);
+      // this.props.dispatch(thunk_action_search_restaurant(null, null, q));
+    } else if (option === "filter") {
+      isSearchPage(option);
+      reqFilterRestaurant(district, cuisine, price_range);
+      // this.props.dispatch(thunk_action_filter_restaurant(district, cuisine));
+    } else if (option === "popular") {
+      isSearchPage(option);
+      sendPopular(popularRestaurant);
+    } else if (option === "topstar") {
+      isSearchPage(option);
+      sendTopStar(topStarRestaurant);
+    } else if (option === "topreview") {
+      isSearchPage(option);
+      sendTopReview(topReviewRestaurant);
     }
-    this.props.dispatch(thunk_action_restaurant());
+    // this.props.dispatch(thunk_action_restaurant());
   };
 
   componentWillUnmount = () => {
-    this.props.dispatch(notSearchPage());
+    this.props.notSearchPage();
   };
 
   render() {
@@ -83,7 +114,23 @@ export class Search extends Component {
 }
 
 const mapStateToProps = createStructuredSelector({
-  searchData: selectSearchData
+  searchData: selectSearchData,
+  popularRestaurant: selectPopularRestaurant,
+  topStarRestaurant: selectTopStarRestaurant,
+  topReviewRestaurant: selectTopReviewRestaurant
 });
 
-export default connect(mapStateToProps)(Search);
+const mapDispatchToProps = dispatch => ({
+  isSearchPage: keyword => dispatch(isSearchPage(keyword)),
+  notSearchPage: () => dispatch(notSearchPage()),
+  fetchRestaurant: () => dispatch(thunk_action_restaurant()),
+  reqSearchRestaurant: (district, keyword, q) =>
+    dispatch(thunk_action_search_restaurant(district, keyword, q)),
+  reqFilterRestaurant: (district, cuisine, priceRange) =>
+    dispatch(thunk_action_filter_restaurant(district, cuisine, priceRange)),
+  sendPopular: data => dispatch(searchPopular(data)),
+  sendTopStar: data => dispatch(searchTopStar(data)),
+  sendTopReview: data => dispatch(searchTopReview(data))
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Search);

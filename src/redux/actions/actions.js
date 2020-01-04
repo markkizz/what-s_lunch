@@ -10,11 +10,14 @@ const removeLocalStorage = token => localStorage.removeItem(TOKEN);
 export const USER_LOGIN = "USER_LOGIN";
 export const USER_LOGOUT = "USER_LOGOUT";
 export const SEARCH = "SEARCH";
+export const ISSEARCHPAGE = "ISSEARCHPAGE";
+export const NOTSEARCHPAGE = "NOTSEARCHPAGE";
+export const SEARCHPOPULAR = "SEARCHPOPULAR";
+export const SEARCHTOPSTAR = "SEARCHTOPSTAR";
+export const SEARCHTOPREVIEW = "SEARCHTOPREVIEW";
 export const FETCH_RESTAURANT = "FETCH_RESTAURANT";
 export const FETCHED_RESTAURANT = "FETCHED_RESTAURANT";
 export const RECEIVE_ERROR = "RECEIVE_ERROR";
-export const ISSEARCHPAGE = "ISSEARCHPAGE";
-export const NOTSEARCHPAGE = "NOTSEARCHPAGE";
 export const FETCHED_SEARCH_RESTAURANT = "FETCHED_SEARCH_RESTAURANT";
 
 // * ACTION CREATOR *
@@ -42,6 +45,21 @@ export const isSearchPage = keyword => ({
 
 export const notSearchPage = () => ({
   type: "NOTSEARCHPAGE"
+});
+
+export const searchPopular = popularRestaurant => ({
+  type: "SEARCHPOPULAR",
+  searchData: popularRestaurant
+});
+
+export const searchTopStar = topstarRestaurant => ({
+  type: "SEARCHTOPSTAR",
+  searchData: topstarRestaurant
+});
+
+export const searchTopReview = topreviewRestaurant => ({
+  type: "SEARCHTOPREVIEW",
+  searchData: topreviewRestaurant
 });
 
 // * FETCH RESTAURANT ACTION CREATOR
@@ -116,21 +134,25 @@ export const thunk_action_search_restaurant = (district, keyword, q) => (
     .catch(err => console.error(err));
 };
 
-export const thunk_action_filter_restaurant = (district, cuisine) => (
-  dispatch,
-  getState
-) => {
+export const thunk_action_filter_restaurant = (
+  district,
+  cuisine,
+  priceRange
+) => (dispatch, getState) => {
   console.log("inside thunk filter action");
-  dispatch(isSearchPage("filter"));
+  const allPath = `/filterRestaurant?district=${district}&cuisine=${cuisine}&price_range=${priceRange}`;
+  const districtPath = `/filterRestaurant?district=${district}&price_range=${priceRange}`;
+  const cuisinePath = `/filterRestaurant?cuisine=${cuisine}&price_range=${priceRange}`;
+  const axiosFilter = path =>
+    axios
+      .get(path)
+      .then(({ data }) => dispatch(receive_search_restaurant(data)))
+      .catch(err => console.error(err));
   if (district && !cuisine) {
-    return axios
-      .get(`/filterRestaurant?district=${district}`)
-      .then(({ data }) => dispatch(receive_search_restaurant(data)))
-      .catch(err => console.error(err));
-  } else {
-    return axios
-      .get(`/filterRestaurant?district=${district}&cuisine=${cuisine}`)
-      .then(({ data }) => dispatch(receive_search_restaurant(data)))
-      .catch(err => console.error(err));
+    return axiosFilter(districtPath);
   }
+  if (cuisine && !district && !priceRange) {
+    return axiosFilter(cuisinePath);
+  }
+  return axiosFilter(allPath);
 };

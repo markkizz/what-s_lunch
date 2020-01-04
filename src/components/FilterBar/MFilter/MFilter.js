@@ -48,7 +48,7 @@ export class MFilter extends Component {
   state = {
     districtSelected: [],
     cuisineSelected: [],
-    priceRange: []
+    priceRange: ["$", "$$$$"]
   };
 
   selectItem = (component, targetName) => {
@@ -79,12 +79,13 @@ export class MFilter extends Component {
   };
 
   handleApply = () => {
-    const { districtSelected, cuisineSelected } = this.state;
+    const { districtSelected, cuisineSelected, priceRange } = this.state;
     if (districtSelected.length > 0 || cuisineSelected.length > 0) {
       const districtQuery = districtSelected.join(",");
       const cuisineQuery = cuisineSelected.join(",");
+      const priceRangeQuery = priceRange.join(",");
       this.props.history.push(
-        `/search/filter?district=${districtQuery}&cuisine=${cuisineQuery}`
+        `/search/filter?district=${districtQuery}&cuisine=${cuisineQuery}&price_range=${priceRangeQuery}`
       );
       window.location.reload(true);
     }
@@ -182,7 +183,7 @@ export class MFilter extends Component {
                     range
                     marks={marks}
                     step={null}
-                    defaultValue={[33, 66]}
+                    defaultValue={[0, 100]}
                     tipFormatter={null}
                     onChange={this.handleSliderChange}
                   />

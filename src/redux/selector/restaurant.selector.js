@@ -12,11 +12,6 @@ export const selectRestaurantName = createSelector(
   restaurants => restaurants.map(restaurant => restaurant.name)
 );
 
-export const selectPopularRestaurant = createSelector(
-  selectRestaurants,
-  restaurants => restaurants.map(restaurant => restaurant.rating >= 4)
-);
-
 export const selectDistrictRestaurant = createSelector(
   selectRestaurants,
   restaurants => [
@@ -27,4 +22,39 @@ export const selectDistrictRestaurant = createSelector(
 export const selectCuisineRestaurant = createSelector(
   selectRestaurants,
   restaurants => [...new Set(restaurants.map(restaurant => restaurant.cuisine))]
+);
+
+export const selectPopularRestaurant = createSelector(
+  selectRestaurants,
+  restaurants => restaurants.filter(restaurant => restaurant.rating >= 4)
+);
+
+export const selectTopStarRestaurant = createSelector(
+  selectRestaurants,
+  restaurants => {
+    const arrIdAndUserlike = restaurants.map(restaurant => [
+      restaurant.id,
+      restaurant.user_like
+    ]);
+    const sortByUserlike = arrIdAndUserlike.sort((a, b) => b[1] - a[1]);
+    const sortedRestaurant = sortByUserlike.map(idSorted =>
+      restaurants.find(restaurant => restaurant.id === idSorted[0])
+    );
+    return sortedRestaurant;
+  }
+);
+
+export const selectTopReviewRestaurant = createSelector(
+  selectRestaurants,
+  restaurants => {
+    const arrIdAndUserlike = restaurants.map(restaurant => [
+      restaurant.id,
+      restaurant.total_review
+    ]);
+    const sortBytotalReview = arrIdAndUserlike.sort((a, b) => b[1] - a[1]);
+    const sortedRestaurant = sortBytotalReview.map(idSorted =>
+      restaurants.find(restaurant => restaurant.id === idSorted[0])
+    );
+    return sortedRestaurant;
+  }
 );

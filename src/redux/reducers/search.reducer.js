@@ -1,6 +1,9 @@
 import {
   ISSEARCHPAGE,
   NOTSEARCHPAGE,
+  SEARCHPOPULAR,
+  SEARCHTOPSTAR,
+  SEARCHTOPREVIEW,
   FETCHED_SEARCH_RESTAURANT
 } from "../actions/actions";
 
@@ -22,6 +25,21 @@ function searchReducer(state = initialState, action) {
       return {
         ...state,
         isSearchPage: false
+      };
+    case SEARCHPOPULAR:
+      return {
+        ...state,
+        searchData: action.searchData
+      };
+    case SEARCHTOPSTAR:
+      return {
+        ...state,
+        searchData: action.searchData
+      };
+    case SEARCHTOPREVIEW:
+      return {
+        ...state,
+        searchData: action.searchData
       };
     case FETCHED_SEARCH_RESTAURANT:
       return {

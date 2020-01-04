@@ -24,10 +24,34 @@ export class HomePage extends Component {
     districtSelected: "",
     searchText: "",
     quickSearchs: [
-      { name: "Popular", iconName: <MdRestaurant />, color: "#9878FF" },
-      { name: "Categories", iconName: <GiBookCover />, color: "#797CE8" },
-      { name: "Top Star", iconName: <FaHeart />, color: "#7997E8" },
-      { name: "Top reviews", iconName: <MdRateReview />, color: "#91CCFF" }
+      {
+        id: 1,
+        name: "Popular",
+        iconName: <MdRestaurant />,
+        color: "#9878FF",
+        path: "popular"
+      },
+      {
+        id: 2,
+        name: "Categories",
+        iconName: <GiBookCover />,
+        color: "#797CE8",
+        path: "categories"
+      },
+      {
+        id: 3,
+        name: "Top Star",
+        iconName: <FaHeart />,
+        color: "#7997E8",
+        path: "topstar"
+      },
+      {
+        id: 4,
+        name: "Top reviews",
+        iconName: <MdRateReview />,
+        color: "#91CCFF",
+        path: "topreview"
+      }
     ]
   };
 
@@ -43,7 +67,7 @@ export class HomePage extends Component {
     }));
   };
 
-  handleClick = () => {
+  handleClickSearch = () => {
     const { districtSelected, searchText } = this.state;
     if (districtSelected && searchText) {
       this.props.history.push(
@@ -54,15 +78,30 @@ export class HomePage extends Component {
     }
   };
 
+  handleQuickSearch = id => () => {
+    const { push } = this.props.history;
+    if (id === 1) {
+      push("/search/popular");
+    } else if (id === 3) {
+      push("/search/topstar");
+    } else if (id === 4) {
+      push("/search/topreview");
+    }
+  };
+
   componentDidMount = () => {
-    this.props.dispatch(thunk_action_restaurant());
+    this.props.fetchRestaurant();
   };
 
   render() {
     const { quickSearchs } = this.state;
     const { restaurants, restaurantName, restaurantDistrict } = this.props;
-    const options1 = restaurantDistrict.map(d => <Option key={d}>{d}</Option>);
-    const options2 = restaurantName.map(d => <Option key={d}>{d}</Option>);
+    const options1 = restaurantDistrict.map((data, i) => (
+      <Option key={i + data}>{data}</Option>
+    ));
+    const options2 = restaurantName.map((data, i) => (
+      <Option key={i + data}>{data}</Option>
+    ));
     return (
       <div className="bg-page">
         <Navbar />
@@ -101,7 +140,7 @@ export class HomePage extends Component {
                   block
                   type="primary"
                   style={{ width: "85%", marginTop: 10 }}
-                  onClick={this.handleClick}
+                  onClick={this.handleClickSearch}
                 >
                   Search
                 </Button>
@@ -113,12 +152,13 @@ export class HomePage extends Component {
           <div>
             <Row style={{ margin: "15px 0" }}>
               {quickSearchs.map((quickSearch, i) => (
-                <Col span={6} className={style.Flex}>
+                <Col span={6} className={style.Flex} key={i + quickSearch.name}>
                   <Row type="flex" justify="center">
                     <Col>
                       <div
                         className={style.Circle}
                         style={{ backgroundColor: quickSearch.color }}
+                        onClick={this.handleQuickSearch(quickSearch.id)}
                       >
                         {quickSearch.iconName}
                       </div>
@@ -172,50 +212,8 @@ const mapStateToProps = createStructuredSelector({
   restaurantDistrict: selectDistrictRestaurant
 });
 
-export default connect(mapStateToProps, null)(HomePage);
+const mapDispatchToProps = dispatch => ({
+  fetchRestaurant: () => dispatch(thunk_action_restaurant())
+});
 
-// {/* <Col span={6} className={style.Flex}>
-//                 <Row type="flex" justify="center">
-//                   <Col>
-//                     <div
-//                       className={style.Circle}
-//                       style={{ backgroundColor: "#797CE8" }}
-//                     >
-//                       <GiBookCover />
-//                     </div>
-//                   </Col>
-//                   <Col>
-//                     <p>Categories</p>
-//                   </Col>
-//                 </Row>
-//               </Col>
-//               <Col span={6} className={style.Flex}>
-//                 <Row type="flex" justify="center">
-//                   <Col>
-//                     <div
-//                       className={style.Circle}
-//                       style={{ backgroundColor: "#7997E8" }}
-//                     >
-//                       <Icon type="like" />
-//                     </div>
-//                   </Col>
-//                   <Col>
-//                     <p>Top Star</p>
-//                   </Col>
-//                 </Row>
-//               </Col>
-//               <Col span={6} className={style.Flex}>
-//                 <Row type="flex" justify="center">
-//                   <Col>
-//                     <div
-//                       className={style.Circle}
-//                       style={{ backgroundColor: "#91CCFF" }}
-//                     >
-//                       <MdRateReview />
-//                     </div>
-//                   </Col>
-//                   <Col>
-//                     <p>Top reviews</p>
-//                   </Col>
-//                 </Row>
-//               </Col> */}
+export default connect(mapStateToProps, mapDispatchToProps)(HomePage);
