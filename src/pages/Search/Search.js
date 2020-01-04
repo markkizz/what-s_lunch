@@ -6,6 +6,8 @@ import {
   thunk_action_search_restaurant,
   thunk_action_restaurant
 } from "../../redux/actions/actions";
+import { createStructuredSelector } from "reselect";
+import { selectSearchData } from "../../redux/selector/search.selector";
 import qs from "query-string";
 import Navbar from "../../components/Navbar/Navbar";
 import style from "./Search.module.css";
@@ -74,9 +76,8 @@ export class Search extends Component {
   }
 }
 
-const mapStateToProps = state => ({
-  restaurant: state.restaurant,
-  searchData: state.search.searchData
+const mapStateToProps = createStructuredSelector({
+  searchData: selectSearchData
 });
 
 export default connect(mapStateToProps)(Search);

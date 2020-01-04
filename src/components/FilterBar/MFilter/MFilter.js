@@ -1,5 +1,10 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import { createStructuredSelector } from "reselect";
+import {
+  selectDistrictRestaurant,
+  selectCuisineRestaurant
+} from "../../../redux/selector/restaurant.selector";
 import { withRouter } from "react-router-dom";
 import { Row, Col, Modal, Typography, Divider, Slider, Button } from "antd";
 import style from "./MFilter.module.css";
@@ -51,9 +56,11 @@ export class MFilter extends Component {
     }));
   };
 
-  deSelectItem = (component, targetName) => {
+  deSelectItem = (component, targetToDeSelect) => {
     this.setState(state => ({
-      [component]: state[component].filter(name => name !== targetName)
+      [component]: state[component].filter(
+        selected => selected !== targetToDeSelect
+      )
     }));
   };
 
@@ -65,8 +72,7 @@ export class MFilter extends Component {
   };
 
   render() {
-    const { cuisine, district } = this.props.restaurant;
-    const { visible, handleShow } = this.props;
+    const { visible, handleShow, district, cuisine } = this.props;
     const { districtSelected, cuisineSelected } = this.state;
     return (
       <>
@@ -168,8 +174,9 @@ export class MFilter extends Component {
   }
 }
 
-const mapStateToProps = state => ({
-  restaurant: state.restaurant
+const mapStateToProps = createStructuredSelector({
+  district: selectDistrictRestaurant,
+  cuisine: selectCuisineRestaurant
 });
 
 export default withRouter(connect(mapStateToProps)(MFilter));

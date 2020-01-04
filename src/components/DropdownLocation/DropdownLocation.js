@@ -1,5 +1,11 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import { createStructuredSelector } from "reselect";
+import {
+  selectRestaurantName,
+  selectDistrictRestaurant,
+  selectCuisineRestaurant
+} from "../../redux/selector/restaurant.selector";
 import { withRouter } from "react-router-dom";
 import { Row, Input, Col, Icon, Button } from "antd";
 import style from "./DropdownLocation.module.css";
@@ -25,7 +31,7 @@ export class DropdownLocation extends Component {
   };
 
   componentDidMount = () => {
-    const { restaurantName, cuisine, district } = this.props.restaurant;
+    const { restaurantName, cuisine, district } = this.props;
     const locations = [...restaurantName, ...cuisine, ...district];
     this.setState(state => ({
       locations
@@ -77,8 +83,14 @@ export class DropdownLocation extends Component {
   }
 }
 
-const mapStateToProps = state => ({
-  restaurant: state.restaurant
+const mapStateToProps = createStructuredSelector({
+  restaurantName: selectRestaurantName,
+  district: selectDistrictRestaurant,
+  cuisine: selectCuisineRestaurant
 });
+
+// const mapStateToProps = state => ({
+//   restaurant: state.restaurant
+// });
 
 export default withRouter(connect(mapStateToProps)(DropdownLocation));
