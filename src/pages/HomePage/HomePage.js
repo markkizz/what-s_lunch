@@ -96,11 +96,11 @@ export class HomePage extends Component {
   render() {
     const { quickSearchs } = this.state;
     const { restaurants, restaurantName, restaurantDistrict } = this.props;
-    const options1 = restaurantDistrict.map((data, i) => (
-      <Option key={i + data}>{data}</Option>
+    const options1 = restaurantDistrict.map(data => (
+      <Option key={data}>{data}</Option>
     ));
-    const options2 = restaurantName.map((data, i) => (
-      <Option key={i + data}>{data}</Option>
+    const options2 = restaurantName.map(data => (
+      <Option key={data}>{data}</Option>
     ));
     return (
       <div className="bg-page">
@@ -149,28 +149,26 @@ export class HomePage extends Component {
           </div>
         </div>
         <div className="container">
-          <div>
-            <Row style={{ margin: "15px 0" }}>
-              {quickSearchs.map((quickSearch, i) => (
-                <Col span={6} className={style.Flex} key={i + quickSearch.name}>
-                  <Row type="flex" justify="center">
-                    <Col>
-                      <div
-                        className={style.Circle}
-                        style={{ backgroundColor: quickSearch.color }}
-                        onClick={this.handleQuickSearch(quickSearch.id)}
-                      >
-                        {quickSearch.iconName}
-                      </div>
-                    </Col>
-                    <Col>
-                      <p>{quickSearch.name}</p>
-                    </Col>
-                  </Row>
-                </Col>
-              ))}
-            </Row>
-          </div>
+          <Row style={{ margin: "15px 0" }}>
+            {quickSearchs.map((quickSearch, i) => (
+              <Col span={6} className={style.Flex} key={i + quickSearch.name}>
+                <Row type="flex" justify="center">
+                  <Col>
+                    <div
+                      className={style.Circle}
+                      style={{ backgroundColor: quickSearch.color }}
+                      onClick={this.handleQuickSearch(quickSearch.id)}
+                    >
+                      {quickSearch.iconName}
+                    </div>
+                  </Col>
+                  <Col>
+                    <p>{quickSearch.name}</p>
+                  </Col>
+                </Row>
+              </Col>
+            ))}
+          </Row>
           <div className={style.TrendingContainer}>
             <div className="text-left">
               <h3>Trending Restaurant</h3>
