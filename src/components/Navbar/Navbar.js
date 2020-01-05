@@ -93,15 +93,15 @@ export class Navbar extends Component {
         <nav>
           <div className="container">
             <Row type="flex" justify="space-between" align="middle">
-              <Link to="/">
-                <Col span={2}>
+              <Col span={2}>
+                <Link to="/">
                   <img
                     src={require("../../image/logo.png")}
                     alt="what's lunch"
                     className={style.LogoImg}
                   />
-                </Col>
-              </Link>
+                </Link>
+              </Col>
               <Col span={4}>
                 {isSearchPage && (
                   <ButtonLocation onClick={this.handleShow("dropdownLocation")}>
