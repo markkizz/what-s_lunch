@@ -1,5 +1,7 @@
 import React, { Component } from "react";
-import { Row, Col, Icon, Button } from "antd";
+import { connect } from "react-redux";
+import { Link } from "react-router-dom";
+import { Row, Col, Icon, Button, Avatar } from "antd";
 import styled from "styled-components";
 import style from "./Navbar.module.css";
 import DropdownLocation from "../DropdownLocation/DropdownLocation";
@@ -33,14 +35,13 @@ export class Navbar extends Component {
   state = {
     dropdownLocation: false,
     dropdownUser: false,
-    isSearch: true,
     mobileScreen: false,
     modalLoginVisible: false
   };
 
-  handleShowModal = () => {
+  handleShow = component => () => {
     this.setState(state => ({
-      modalLoginVisible: !state.modalLoginVisible
+      [component]: !state[`${component}`]
     }));
   };
 
@@ -52,7 +53,29 @@ export class Navbar extends Component {
   resize = () => {
     let isMobileScreen = window.innerWidth <= 767;
     if (isMobileScreen !== this.state.mobileScreen) {
-      this.setState({ mobileScreen: isMobileScreen });
+      this.setState({
+        mobileScreen: isMobileScreen,
+        dropdownUser: false,
+        dropdownLocation: false
+      });
+    }
+  };
+
+  renderDiffComponentWhenMobileScreen = () => {
+    const { mobileScreen } = this.state;
+    const { role } = this.props.user;
+    if (mobileScreen) {
+      if (role === "user") {
+        return <Avatar onClick={this.handleShow("dropdownUser")}>USER</Avatar>;
+      } else {
+        return <Icon type="user" onClick={this.handleShow("dropdownUser")} />;
+      }
+    } else {
+      return (
+        <Button type="primary" onClick={this.handleShow("modalLoginVisible")}>
+          Login
+        </Button>
+      );
     }
   };
 
@@ -60,42 +83,36 @@ export class Navbar extends Component {
     const {
       dropdownLocation,
       dropdownUser,
-      isSearch,
       mobileScreen,
       modalLoginVisible
     } = this.state;
-    console.log(mobileScreen);
+    const { isSearchPage, keyword } = this.props.search;
+    console.log("isMobileScreen", mobileScreen);
     return (
       <>
         <nav>
           <div className="container">
             <Row type="flex" justify="space-between" align="middle">
-              <Col span={2}>
-                <img
-                  src={require("../../image/logo.png")}
-                  alt="what's lunch"
-                  className={style.LogoImg}
-                />
-              </Col>
+              <Link to="/">
+                <Col span={2}>
+                  <img
+                    src={require("../../image/logo.png")}
+                    alt="what's lunch"
+                    className={style.LogoImg}
+                  />
+                </Col>
+              </Link>
               <Col span={4}>
-                {isSearch && (
-                  <ButtonLocation>
+                {isSearchPage && (
+                  <ButtonLocation onClick={this.handleShow("dropdownLocation")}>
                     <span style={{ color: "#2eba69" }}>
                       <Icon type="search" />
                     </span>
-                    <span>Pathumwan</span>
+                    <span>{keyword}</span>
                   </ButtonLocation>
                 )}
               </Col>
-              <Col span={4}>
-                {mobileScreen ? (
-                  <Icon type="user" />
-                ) : (
-                  <Button type="primary" onClick={this.handleShowModal}>
-                    Login
-                  </Button>
-                )}
-              </Col>
+              <Col span={4}>{this.renderDiffComponentWhenMobileScreen()}</Col>
             </Row>
           </div>
         </nav>
@@ -103,11 +120,18 @@ export class Navbar extends Component {
         {dropdownUser && <DropdownUser />}
         <ModalLogin
           visibility={modalLoginVisible}
-          onCancel={this.handleShowModal}
+          onCancel={this.handleShow("modalLoginVisible")}
         />
       </>
     );
   }
 }
 
-export default Navbar;
+const mapStateToProps = state => {
+  return {
+    user: state.user,
+    search: state.search
+  };
+};
+
+export default connect(mapStateToProps, null)(Navbar);

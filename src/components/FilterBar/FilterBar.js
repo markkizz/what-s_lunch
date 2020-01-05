@@ -1,4 +1,6 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
+import { thunk_action_restaurant } from "../../redux/actions/actions";
 import style from "./FilterBar.module.css";
 import { Row, Col, Icon, Button, Dropdown, Menu } from "antd";
 import { FaSlidersH } from "react-icons/fa";
@@ -22,7 +24,22 @@ const menu = (
 );
 
 export class FilterBar extends Component {
+  state = {
+    modalVisible: false
+  };
+
+  handleShow = () => {
+    this.setState(state => ({
+      modalVisible: !state.modalVisible
+    }));
+  };
+
+  componentDidMount = () => {
+    this.props.dispatch(thunk_action_restaurant());
+  };
+
   render() {
+    const { modalVisible } = this.state;
     return (
       <>
         <Row
@@ -33,7 +50,11 @@ export class FilterBar extends Component {
           gutter={[16]}
         >
           <Col className={style.ColCustom}>
-            <Button type="primary" className={style.ButtonCustom}>
+            <Button
+              type="primary"
+              className={style.ButtonCustom}
+              onClick={this.handleShow}
+            >
               <FaSlidersH />
             </Button>
           </Col>
@@ -68,10 +89,14 @@ export class FilterBar extends Component {
             </Button>
           </Col>
         </Row>
-        <ModalFilter />
+        <ModalFilter visible={modalVisible} handleShow={this.handleShow} />
       </>
     );
   }
 }
 
-export default FilterBar;
+const mapStateToProps = state => ({
+  restaurant: state.restaurant
+});
+
+export default connect(mapStateToProps)(FilterBar);
