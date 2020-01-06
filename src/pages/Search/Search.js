@@ -12,7 +12,7 @@ import {
 } from "../../redux/actions/actions";
 import { createStructuredSelector } from "reselect";
 import { selectSearchData } from "../../redux/selector/search.selector";
-import qs from "query-string";
+import queryString from "query-string";
 import Navbar from "../../components/Navbar/Navbar";
 import style from "./Search.module.css";
 import FilterBar from "../../components/FilterBar/FilterBar";
@@ -25,10 +25,16 @@ import {
   selectTopReviewRestaurant
 } from "../../redux/selector/restaurant.selector";
 
+// TODO: move popular topstar topreview to thunk not select from redux
+// * Stay DRY
 export class Search extends Component {
+  handleClickToDetail = (restaurantName, id) => () => {
+    this.props.history.push(`/restaurant-detail/${restaurantName}/${id}`);
+  };
+
   componentDidMount = () => {
     this.props.fetchRestaurant();
-    const { district, keyword, q, cuisine, price_range } = qs.parse(
+    const { district, keyword, q, cuisine, price_range } = queryString.parse(
       this.props.location.search
     );
     const { option } = this.props.match.params;
@@ -46,15 +52,12 @@ export class Search extends Component {
     if (district && keyword) {
       isSearchPage(district);
       reqSearchRestaurant(district, keyword);
-      // this.props.dispatch(thunk_action_search_restaurant(district, keyword));
     } else if (q) {
       isSearchPage(q);
       reqSearchRestaurant(null, null, q);
-      // this.props.dispatch(thunk_action_search_restaurant(null, null, q));
     } else if (option === "filter") {
       isSearchPage(option);
       reqFilterRestaurant(district, cuisine, price_range);
-      // this.props.dispatch(thunk_action_filter_restaurant(district, cuisine));
     } else if (option === "popular") {
       isSearchPage(option);
       sendPopular(popularRestaurant);
@@ -65,7 +68,6 @@ export class Search extends Component {
       isSearchPage(option);
       sendTopReview(topReviewRestaurant);
     }
-    // this.props.dispatch(thunk_action_restaurant());
   };
 
   componentWillUnmount = () => {
@@ -94,12 +96,8 @@ export class Search extends Component {
                       key={i + restaurant.name}
                     >
                       <RestaurantCard
-                        restaurantName={restaurant.name}
-                        src={restaurant.image_url}
-                        rating={restaurant.rating}
-                        totalReviews={restaurant.total_review}
-                        description={restaurant.description}
-                        priceRange={restaurant.price_range}
+                        restaurantDetail={restaurant}
+                        handleClickToDetail={this.handleClickToDetail}
                       />
                     </Col>
                   ))}

@@ -1,4 +1,9 @@
 import React, { Component } from "react";
+import { withRouter } from "react-router-dom";
+import { connect } from "react-redux";
+import { createStructuredSelector } from "reselect";
+import { selectRestaurantDetailPage } from "../../redux/selector/restaurant.selector";
+import { thunk_action_select_restaurant } from "../../redux/actions/actions";
 import Navbar from "../../components/Navbar/Navbar";
 import {
   Row,
@@ -15,10 +20,17 @@ import {
 import style from "./RestaurantDetail.module.css";
 import { MdLocationOn, MdLocalPhone, MdRestaurant } from "react-icons/md";
 import { FaDollarSign } from "react-icons/fa";
-import ReviewCard from '../../components/ReviewCard/ReviewCard';
+import ReviewCard from "../../components/ReviewCard/ReviewCard";
 
 export class RestaurantDetail extends Component {
+  componentDidMount = () => {
+    const { id } = this.props.match.params;
+    const { fetchRestaurant } = this.props;
+    fetchRestaurant(id);
+  };
+
   render() {
+    const { restaurantDetail } = this.props;
     return (
       <div className="bg-page">
         <Navbar />
@@ -28,22 +40,29 @@ export class RestaurantDetail extends Component {
             <Row type="flex" align="middle">
               <Col span={24}>
                 <div className="text-left">
-                  <h2>Restaurant Name</h2>
+                  <h2>{restaurantDetail.name}</h2>
                 </div>
                 <div className="text-right" style={{ lineHeight: "36px" }}>
                   <Icon type="heart" />
                 </div>
               </Col>
               <Col span={24}>
-                <Rate disabled defaultValue={3} className={style.StarCustom} />
+                <Rate
+                  disabled
+                  allowHalf
+                  defaultValue={restaurantDetail.rating}
+                  className={style.StarCustom}
+                />
                 <span>
-                  5.0 <small>(1k reviews)</small>
+                  {restaurantDetail.rating}
+                  <small>({restaurantDetail.total_review} reviews)</small>
                 </span>
               </Col>
               <Col span={24}>
-                <p>$$$$ Japanese</p>
+                <p>{restaurantDetail.cuisine}</p>
               </Col>
               <Col span={24}>
+                <Tag color="green">{restaurantDetail.price_range}</Tag>
                 <Tag color="green">open</Tag>
               </Col>
             </Row>
@@ -52,31 +71,11 @@ export class RestaurantDetail extends Component {
         {/* Slider */}
         <div>
           <Carousel style={{ width: 375, height: 210 }}>
+            {/* TODO: map div img */}
             <div>
               <img
-                src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1950&q=80"
-                alt=""
-                style={{ width: 375, height: 210 }}
-              />
-            </div>
-            <div>
-              <img
-                src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=967&q=80"
-                alt=""
-                style={{ width: 375, height: 210 }}
-              />
-            </div>
-            <div>
-              <img
-                src="https://images.unsplash.com/photo-1514933651103-005eec06c04b?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=967&q=80"
-                alt=""
-                style={{ width: 375, height: 210 }}
-              />
-            </div>
-            <div>
-              <img
-                src="https://images.unsplash.com/photo-1428515613728-6b4607e44363?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1050&q=80"
-                alt=""
+                src={restaurantDetail.image_url}
+                alt={restaurantDetail.image_url}
                 style={{ width: 375, height: 210 }}
               />
             </div>
@@ -102,7 +101,7 @@ export class RestaurantDetail extends Component {
                     <MdRestaurant />
                   </Col>
                   <Col span={22}>
-                    <p>Japanese</p>
+                    <p>{restaurantDetail.cuisine}</p>
                   </Col>
                 </Row>
                 <Row className={style.StyleText}>
@@ -110,10 +109,7 @@ export class RestaurantDetail extends Component {
                     <MdLocationOn />
                   </Col>
                   <Col span={22}>
-                    <p>
-                      257/1-3 Charoennakorn Road Anantara Bangkok Riverside,
-                      Bangkok 10600 Thailand
-                    </p>
+                    <p>{restaurantDetail.address}</p>
                   </Col>
                 </Row>
                 <Row className={style.StyleText}>
@@ -121,7 +117,7 @@ export class RestaurantDetail extends Component {
                     <MdLocalPhone />
                   </Col>
                   <Col span={22}>
-                    <p>0847211814</p>
+                    <p>{restaurantDetail.phone}</p>
                   </Col>
                 </Row>
               </Card>
@@ -159,11 +155,21 @@ export class RestaurantDetail extends Component {
               </Card>
             </Col>
           </Row>
-          <ReviewCard/>
+          <ReviewCard />
         </div>
       </div>
     );
   }
 }
 
-export default RestaurantDetail;
+const mapStateToProps = createStructuredSelector({
+  restaurantDetail: selectRestaurantDetailPage
+});
+
+const mapDispatchToProps = dispatch => ({
+  fetchRestaurant: id => dispatch(thunk_action_select_restaurant(id))
+});
+
+export default withRouter(
+  connect(mapStateToProps, mapDispatchToProps)(RestaurantDetail)
+);

@@ -1,6 +1,7 @@
 import { createSelector } from "reselect";
 
 const selectRestaurants = state => state.restaurant.restaurantData;
+const selectRestaurantDetail = state => state.restaurant.restaurantDetailPage;
 
 export const selectRestaurantData = createSelector(
   selectRestaurants,
@@ -57,4 +58,9 @@ export const selectTopReviewRestaurant = createSelector(
     );
     return sortedRestaurant;
   }
+);
+
+export const selectRestaurantDetailPage = createSelector(
+  selectRestaurantDetail,
+  restaurant => restaurant
 );
