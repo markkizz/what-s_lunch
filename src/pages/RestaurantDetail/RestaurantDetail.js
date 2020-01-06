@@ -3,7 +3,10 @@ import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { createStructuredSelector } from "reselect";
 import { selectRestaurantDetailPage } from "../../redux/selector/restaurant.selector";
-import { thunk_action_select_restaurant } from "../../redux/actions/actions";
+import {
+  thunk_action_select_restaurant,
+  restaurantToReview
+} from "../../redux/actions/actions";
 import Navbar from "../../components/Navbar/Navbar";
 import {
   Row,
@@ -27,6 +30,12 @@ export class RestaurantDetail extends Component {
     const { id } = this.props.match.params;
     const { fetchRestaurant } = this.props;
     fetchRestaurant(id);
+  };
+
+  handleClickWriteReview = () => {
+    const { writeReviewWith, restaurantDetail, history } = this.props;
+    writeReviewWith(restaurantDetail);
+    history.push("/write-review");
   };
 
   render() {
@@ -147,7 +156,11 @@ export class RestaurantDetail extends Component {
                 </Row>
                 <Row>
                   <Col span={24}>
-                    <Button block type="primary">
+                    <Button
+                      block
+                      type="primary"
+                      onClick={this.handleClickWriteReview}
+                    >
                       Write review
                     </Button>
                   </Col>
@@ -167,7 +180,8 @@ const mapStateToProps = createStructuredSelector({
 });
 
 const mapDispatchToProps = dispatch => ({
-  fetchRestaurant: id => dispatch(thunk_action_select_restaurant(id))
+  fetchRestaurant: id => dispatch(thunk_action_select_restaurant(id)),
+  writeReviewWith: data => dispatch(restaurantToReview(data))
 });
 
 export default withRouter(

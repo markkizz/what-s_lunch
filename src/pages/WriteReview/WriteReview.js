@@ -1,9 +1,12 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
+import { createStructuredSelector } from "reselect";
+import { selectRestaurantData } from "../../redux/selector/writeReview.selector";
 import style from "./WriteReview.module.css";
-import { Row, Col, Rate, Icon, Card, Divider, Button, Input } from "antd";
+import { Row, Col, Rate, Card, Divider, Button, Input } from "antd";
 import Navbar from "../../components/Navbar/Navbar";
 
-const { TextArea } = Input
+const { TextArea } = Input;
 
 export class WriteReview extends Component {
   render() {
@@ -22,17 +25,21 @@ export class WriteReview extends Component {
                 <Rate defaultValue={5} className={style.StarRate} />
               </Col>
             </Row>
-            <Row style={{marginTop: 20}}>
+            <Row style={{ marginTop: 20 }}>
               <Col span={24} className={style.Margin}>
-                <label for="title"  className={style.LabelMargin}>Title</label>
+                <label for="title" className={style.LabelMargin}>
+                  Title
+                </label>
                 <Input />
               </Col>
               <Col span={24} className={style.Margin}>
-                <label for="description" className={style.LabelMargin}>Review</label>
+                <label for="description" className={style.LabelMargin}>
+                  Review
+                </label>
                 <TextArea
                   // value={value}
                   // onChange={this.onChange}
-                  style={{resize: "none"}}
+                  style={{ resize: "none" }}
                   placeholder="Controlled autosize"
                   autoSize={{ minRows: 5, maxRows: 3 }}
                 />
@@ -57,4 +64,8 @@ export class WriteReview extends Component {
   }
 }
 
-export default WriteReview;
+const mapStateToProps = createStructuredSelector({
+  restaurantData: selectRestaurantData
+});
+
+export default connect(mapStateToProps)(WriteReview);

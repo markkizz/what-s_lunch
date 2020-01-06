@@ -25,7 +25,7 @@ const pageComponents = {
   },
   writeReview: {
     component: "WriteReview",
-    path: "/write-review"
+    path: "/write-review/:restaurantName?"
   }
 };
 

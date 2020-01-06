@@ -39,8 +39,13 @@ const store = createStore(
 );
 
 store.subscribe(() => {
-  console.log("store state", store.getState());
-  saveState(store.getState().user);
+  const { user, restaurant, writeReview } = store.getState();
+  const storage = {
+    user,
+    restaurant,
+    writeReview
+  };
+  saveState(storage);
 });
 
 export default store;

@@ -9,7 +9,10 @@ const writeReviewReducer = (state = initialState, action) => {
     case WRITEREVIEW:
       return {
         ...state,
-        restaurantData: action.restaurantData
+        restaurantData: {
+          id: action.restaurantData.id,
+          name: action.restaurantData.name
+        }
       };
     default:
       return state;
