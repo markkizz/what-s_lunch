@@ -4,7 +4,16 @@ import { createStructuredSelector } from "reselect";
 import { selectRestaurantData } from "../../redux/selector/writeReview.selector";
 import axios from "../../config/api.service";
 import style from "./WriteReview.module.css";
-import { Row, Col, Rate, Card, Divider, Button, Input } from "antd";
+import {
+  Row,
+  Col,
+  Rate,
+  Card,
+  Divider,
+  Button,
+  Input,
+  notification
+} from "antd";
 import Navbar from "../../components/Navbar/Navbar";
 
 const { TextArea } = Input;
@@ -15,7 +24,7 @@ export class WriteReview extends Component {
     restaurantName: "",
     title: "",
     content: "",
-    rating: 0,
+    rating: 5,
     titleRating: "Exellent"
   };
 
@@ -34,7 +43,7 @@ export class WriteReview extends Component {
     restaurantId = JsonData.id;
     restaurantName = JsonData.name;
 
-    this.setState(state => ({
+    this.setState(() => ({
       restaurantId,
       restaurantName
     }));
@@ -57,12 +66,39 @@ export class WriteReview extends Component {
     }));
   };
 
-  handleCreateReview = () => {
-    const id = this.state.restaurantId;
-    axios
-      .post(`/review-create/${id}`)
-      .then(sth => console.log(sth))
-      .catch(err => console.error(err));
+  openNotification = type => {
+    const successWord = "Create review successful";
+    const errorWord = "Error cannot create review";
+    const description = type === "success" ? successWord : errorWord;
+    const notifyConfig = {
+      message: "Successful Create Review",
+      description,
+      duration: 1.5
+    };
+    notification[type](notifyConfig);
+  };
+
+  handleCreateReview = async () => {
+    const { restaurantId, restaurantName, title, content, rating } = this.state;
+    const { history } = this.props;
+    const data = {
+      title,
+      content,
+      rating
+    };
+    try {
+      axios.post(`/review-create/${restaurantId}`, data);
+      this.openNotification("success");
+      setTimeout(() => {
+        history.push(`/restaurant-detail/${restaurantName}/${restaurantId}`);
+      }, 1100);
+    } catch (err) {
+      console.error(err);
+      this.openNotification("err");
+      setTimeout(() => {
+        window.location.reload(true);
+      }, 1100);
+    }
   };
 
   //input: onChange value
