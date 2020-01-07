@@ -2,34 +2,11 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import { Row, Col, Icon, Button, Avatar } from "antd";
-import styled from "styled-components";
+import { ButtonLocation } from "../../shared/Button.styled";
 import style from "./Navbar.module.css";
 import DropdownLocation from "../DropdownLocation/DropdownLocation";
 import DropdownUser from "../DropdownUser/DropdownUser";
 import ModalLogin from "../ModalLogin/ModalLogin";
-
-const ButtonLocation = styled.button`
-  display: flex;
-  align-content: center;
-  width: fit-content;
-  background: transparent;
-  color: black;
-  font-size: 1em;
-  margin: 0;
-  padding: 0.25em 1em 0.25em 1em;
-  border: 1px solid rgba(0, 0, 0, 0.2);
-  border-radius: 15px;
-  outline: none !important;
-
-  > span {
-    > i {
-      > svg {
-        margin-right: 5px;
-        margin-top: 5px;
-      }
-    }
-  }
-`;
 
 export class Navbar extends Component {
   state = {

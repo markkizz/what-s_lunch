@@ -7,7 +7,7 @@ import { FaQuoteLeft } from "react-icons/fa";
 export class RestaurantCard extends Component {
   render() {
     const { restaurantDetail, handleClickToDetail } = this.props;
-    const maxChar = 105;
+    const maxChar = 110;
     return (
       <>
         <Card

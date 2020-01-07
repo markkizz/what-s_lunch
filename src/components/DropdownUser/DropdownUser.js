@@ -13,6 +13,7 @@ export class DropdownSearch extends Component {
     onClickShow();
     logout();
     history.push("/");
+    window.location.reload(true);
   };
 
   render() {
