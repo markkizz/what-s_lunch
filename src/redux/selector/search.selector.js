@@ -1,5 +1,5 @@
 import { createSelector } from "reselect";
 
-const selectSearch = state => state.search.searchData;
+const selectStateSearch = state => state.search.searchData;
 
-export const selectSearchData = createSelector(selectSearch, data => data);
+export const selectSearchData = createSelector(selectStateSearch, data => data);

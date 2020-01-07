@@ -1,39 +1,40 @@
 import { createSelector } from "reselect";
 
-const selectRestaurants = state => state.restaurant.restaurantData;
-const selectRestaurantDetail = state => state.restaurant.restaurantDetailPage;
-const selectRestaurantReviewData = state =>
+const selectStateRestaurants = state => state.restaurant.restaurantData;
+const selectStateRestaurantDetail = state =>
+  state.restaurant.restaurantDetailPage;
+const selectStateRestaurantReviewData = state =>
   state.restaurant.restaurantReviewData;
 
 export const selectRestaurantData = createSelector(
-  selectRestaurants,
+  selectStateRestaurants,
   restaurantData => restaurantData
 );
 
 export const selectRestaurantName = createSelector(
-  selectRestaurants,
+  selectStateRestaurants,
   restaurants => restaurants.map(restaurant => restaurant.name)
 );
 
 export const selectDistrictRestaurant = createSelector(
-  selectRestaurants,
+  selectStateRestaurants,
   restaurants => [
     ...new Set(restaurants.map(restaurant => restaurant.district))
   ]
 );
 
 export const selectCuisineRestaurant = createSelector(
-  selectRestaurants,
+  selectStateRestaurants,
   restaurants => [...new Set(restaurants.map(restaurant => restaurant.cuisine))]
 );
 
 export const selectPopularRestaurant = createSelector(
-  selectRestaurants,
+  selectStateRestaurants,
   restaurants => restaurants.filter(restaurant => restaurant.rating >= 4)
 );
 
 export const selectTopStarRestaurant = createSelector(
-  selectRestaurants,
+  selectStateRestaurants,
   restaurants => {
     const arrIdAndUserlike = restaurants.map(restaurant => [
       restaurant.id,
@@ -48,7 +49,7 @@ export const selectTopStarRestaurant = createSelector(
 );
 
 export const selectTopReviewRestaurant = createSelector(
-  selectRestaurants,
+  selectStateRestaurants,
   restaurants => {
     const arrIdAndUserlike = restaurants.map(restaurant => [
       restaurant.id,
@@ -63,11 +64,11 @@ export const selectTopReviewRestaurant = createSelector(
 );
 
 export const selectRestaurantDetailPage = createSelector(
-  selectRestaurantDetail,
+  selectStateRestaurantDetail,
   restaurant => restaurant
 );
 
 export const selectRestaurantReview = createSelector(
-  selectRestaurantReviewData,
+  selectStateRestaurantReviewData,
   restaurantReviewData => restaurantReviewData
 );

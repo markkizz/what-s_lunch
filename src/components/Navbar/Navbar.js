@@ -39,9 +39,9 @@ export class Navbar extends Component {
     modalLoginVisible: false
   };
 
-  handleShow = component => () => {
+  handleShow = label => () => {
     this.setState(state => ({
-      [component]: !state[`${component}`]
+      [label]: !state[`${label}`]
     }));
   };
 
@@ -117,7 +117,9 @@ export class Navbar extends Component {
           </div>
         </nav>
         {dropdownLocation && <DropdownLocation />}
-        {dropdownUser && <DropdownUser />}
+        {dropdownUser && (
+          <DropdownUser onClickShow={this.handleShow("dropdownUser")} />
+        )}
         <ModalLogin
           visibility={modalLoginVisible}
           onCancel={this.handleShow("modalLoginVisible")}

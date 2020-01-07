@@ -2,8 +2,6 @@ import React from "react";
 import style from "./Review.module.css";
 import { Row, Col, Card, Rate, Icon } from "antd";
 
-// TODO: send props with review data
-
 function ReviewCard(props) {
   const { user, title, content, rating, user_like } = props.reviewData;
   return (

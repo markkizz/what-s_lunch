@@ -125,7 +125,6 @@ export class HomePage extends Component {
                 <Select
                   showSearch
                   search
-                  // placeholder={this.props.placeholder}
                   style={{ width: "85%", marginTop: 10 }}
                   onChange={this.handleSearch}
                   showArrow

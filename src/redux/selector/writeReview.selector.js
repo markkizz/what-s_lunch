@@ -1,8 +1,8 @@
 import { createSelector } from "reselect";
 
-const selectWriteReview = state => state.writeReview;
+const selectStateWriteReview = state => state.writeReview;
 
 export const selectRestaurantData = createSelector(
-  selectWriteReview,
+  selectStateWriteReview,
   writeReview => writeReview.restaurantData
 );

@@ -1,10 +1,20 @@
 import React, { Component } from "react";
+import { Link, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
-import { Link } from "react-router-dom";
-import { Icon, Button, Divider, Avatar } from "antd";
+import { logout } from "../../redux/actions/actions";
+import { createStructuredSelector } from "reselect";
+import { selectUser } from "../../redux/selector/user.selector";
+import { Icon, Button, Divider, Avatar, Col, Row } from "antd";
 import style from "./DropdownUser.module.css";
 
 export class DropdownSearch extends Component {
+  handleLogout = () => {
+    const { history, logout, onClickShow } = this.props;
+    onClickShow();
+    logout();
+    history.push("/");
+  };
+
   render() {
     const { role, username } = this.props.user;
     return (
@@ -25,29 +35,41 @@ export class DropdownSearch extends Component {
           <Divider />
           <div className={style.UserMenu}>
             <p className={style.MenuSelection}>
-              <Icon type="form" style={{ marginRight: 10, marginLeft: 5 }} />
-              write post
+              <Icon type="user" style={{ marginRight: 10, marginLeft: 5 }} />
+              profile
             </p>
           </div>
           <div className={style.UserMenu}>
             <p className={style.MenuSelection}>
-              <Icon
-                type="schedule"
-                style={{ marginRight: 10, marginLeft: 5 }}
-              />
-              Booking
+              <Icon type="form" style={{ marginRight: 10, marginLeft: 5 }} />
+              write post
             </p>
           </div>
+          {role === "user" && (
+            <div>
+              <Row type="flex" justify="center">
+                <Col className={style.BtnLogout}>
+                  <Button block type="primary" onClick={this.handleLogout}>
+                    Log out
+                  </Button>
+                </Col>
+              </Row>
+            </div>
+          )}
         </div>
       </div>
     );
   }
 }
 
-const mapStateToProps = state => {
-  return {
-    user: state.user
-  };
-};
+const mapStateToProps = createStructuredSelector({
+  user: selectUser
+});
 
-export default connect(mapStateToProps, null)(DropdownSearch);
+const mapDispatchToProps = dispatch => ({
+  logout: () => dispatch(logout())
+});
+
+export default withRouter(
+  connect(mapStateToProps, mapDispatchToProps)(DropdownSearch)
+);

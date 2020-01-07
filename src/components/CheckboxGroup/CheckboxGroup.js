@@ -2,7 +2,7 @@ import React from "react";
 import { Checkbox } from "antd";
 
 //TODO: send props with list options
-const optionList = ["test1", "test2", "test3", "test3", "test3", "test3"];
+// const optionList = ["test1", "test2", "test3", "test3", "test3", "test3"];
 
 export default ({ options, ...props }) => (
   <div
