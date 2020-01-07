@@ -2,17 +2,16 @@ import {
   FETCH_RESTAURANT,
   FETCHED_RESTAURANT,
   // POPULARRESTAURANT,
-  // RESTAURANTCUISINE,
-  // RESTAURANTDISTRICT,
+  FETCHED_RESTAURANT_DETAIL,
+  FETCHED_RESTAURANT_REVIEW,
   RECEIVE_ERROR
 } from "../actions/actions";
 
 const initialState = {
   restaurantData: [],
-  restaurantName: [],
+  restaurantDetailPage: {},
+  restaurantReviewData: [],
   popularRestaurant: [],
-  cuisine: [],
-  district: [],
   isFetching: false,
   isError: false
 };
@@ -31,11 +30,22 @@ const restaurantReducer = (state = initialState, action) => {
         isError: false,
         isFetching: false
       };
+    case FETCHED_RESTAURANT_DETAIL:
+      return {
+        ...state,
+        restaurantDetailPage: action.restaurantDetail
+      };
+    case FETCHED_RESTAURANT_REVIEW:
+      return {
+        ...state,
+        restaurantReviewData: action.restaurantReviewData
+      };
     case RECEIVE_ERROR:
       return {
         ...state,
         isError: true
       };
+
     default:
       return state;
   }

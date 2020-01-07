@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-// import { Link, Redirect } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { thunk_action_restaurant } from "../../redux/actions/actions";
 import { createStructuredSelector } from "reselect";
@@ -125,7 +125,6 @@ export class HomePage extends Component {
                 <Select
                   showSearch
                   search
-                  // placeholder={this.props.placeholder}
                   style={{ width: "85%", marginTop: 10 }}
                   onChange={this.handleSearch}
                   showArrow
@@ -174,20 +173,27 @@ export class HomePage extends Component {
               <h3>Trending Restaurant</h3>
             </div>
             <div className="text-right">
-              <p>See all</p>
+              <Link to="/search/popular" className="link">
+                <p>See all</p>
+              </Link>
             </div>
             <div className={style.CardContainer}>
               {restaurants.map((restaurant, i) => (
-                <Row key={i + restaurant.name}>
-                  <Col className={style.CardRestaurant}>
-                    <RestaurantMiniCard
-                      restaurantName={restaurant.name}
-                      src={restaurant.image_url}
-                      rating={restaurant.rating}
-                      totalReviews={restaurant.total_review}
-                    />
-                  </Col>
-                </Row>
+                <Link
+                  to={`/restaurant-detail/${restaurant.name}/${restaurant.id}`}
+                  className="link"
+                >
+                  <Row key={i + restaurant.name}>
+                    <Col className={style.CardRestaurant}>
+                      <RestaurantMiniCard
+                        restaurantName={restaurant.name}
+                        src={restaurant.image_url}
+                        rating={restaurant.rating}
+                        totalReviews={restaurant.total_review}
+                      />
+                    </Col>
+                  </Row>
+                </Link>
               ))}
             </div>
           </div>

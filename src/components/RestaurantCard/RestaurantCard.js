@@ -6,15 +6,8 @@ import { FaQuoteLeft } from "react-icons/fa";
 
 export class RestaurantCard extends Component {
   render() {
-    const {
-      restaurantName,
-      src,
-      rating,
-      totalReviews,
-      description,
-      priceRange
-    } = this.props;
-    const maxChar = 95;
+    const { restaurantDetail, handleClickToDetail } = this.props;
+    const maxChar = 110;
     return (
       <>
         <Card
@@ -23,24 +16,28 @@ export class RestaurantCard extends Component {
         >
           <Row type="flex">
             <Col span={12}>
-              <img src={src} alt={restaurantName} className={style.CardImg} />
+              <img
+                src={restaurantDetail.image_url}
+                alt={restaurantDetail.name}
+                className={style.CardImg}
+              />
             </Col>
             <Col span={12} className={style.PositionP}>
               <Row>
                 <Col span={24}>
-                  <h3>{restaurantName}</h3>
+                  <h3>{restaurantDetail.name}</h3>
                 </Col>
                 {/* TODO: dynamic star */}
                 <Col span={24}>
                   <Rate
                     disabled
-                    defaultValue={rating}
+                    defaultValue={restaurantDetail.rating}
                     className={style.StarCustom}
                   />
-                  <small>{totalReviews} reviews</small>
+                  <small>{restaurantDetail.total_review} reviews</small>
                 </Col>
                 <Col span={24}>
-                  <Tag color="green">{priceRange}</Tag>
+                  <Tag color="green">{restaurantDetail.price_range}</Tag>
                 </Col>
               </Row>
             </Col>
@@ -50,10 +47,12 @@ export class RestaurantCard extends Component {
               <Col span={24}>
                 <p>
                   <FaQuoteLeft style={{ color: "#2eba69" }} />
-                  {description.length > maxChar
-                    ? description.substr(0, maxChar) + "... "
-                    : description}
-                  {description.length > maxChar && <Link> more </Link>}
+                  {restaurantDetail.description.length > maxChar
+                    ? restaurantDetail.description.substr(0, maxChar) + "... "
+                    : restaurantDetail.description}
+                  {restaurantDetail.description.length > maxChar && (
+                    <Link> more </Link>
+                  )}
                 </p>
               </Col>
             </Row>
@@ -68,9 +67,16 @@ export class RestaurantCard extends Component {
                 </Button>
               </Col>
               <Col span={12}>
-                <Button type="primary" style={{ padding: "0.25em 2.25em" }}>
+                <Button
+                  type="primary"
+                  style={{ padding: "0.25em 2.25em" }}
+                  onClick={handleClickToDetail(
+                    restaurantDetail.name,
+                    restaurantDetail.id
+                  )}
+                >
                   <p>
-                    <Icon type="schedule" /> visit
+                    <Icon type="caret-right" /> visit
                   </p>
                 </Button>
               </Col>

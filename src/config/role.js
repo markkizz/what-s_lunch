@@ -21,11 +21,11 @@ const pageComponents = {
   },
   restaurantDetail: {
     component: "RestaurantDetail",
-    path: "/restaurant-detail"
+    path: "/restaurant-detail/:restaurantName/:id?"
   },
   writeReview: {
     component: "WriteReview",
-    path: "/write-review"
+    path: "/write-review/:restaurantName?"
   }
 };
 

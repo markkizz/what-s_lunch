@@ -3,7 +3,7 @@
   top: 65px;
   left: 0.6rem;
   width: 95vw;
-  height: 35vh;
+  height: 42vh;
   background-color: white;
   z-index: 2;
 }
@@ -37,4 +37,8 @@
 
 .MenuSelection:active {
   background-color: #f0f0f0;
+}
+
+.BtnLogout {
+  width: 100%;
 }

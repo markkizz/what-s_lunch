@@ -7,26 +7,8 @@ import {
 } from "../../../redux/selector/restaurant.selector";
 import { withRouter } from "react-router-dom";
 import { Row, Col, Modal, Typography, Divider, Slider, Button } from "antd";
+import { ButtonSelect } from "../../../shared/Button.styled";
 import style from "./MFilter.module.css";
-import styled from "styled-components";
-
-const ButtonSelect = styled.button`
-  display: flex;
-  align-content: center;
-  width: fit-content;
-  background: ${props => (props.active ? "none" : "#e9ebee")} transparent;
-  color: ${props => (props.active ? "#2eba69" : "rgba(0, 0, 0, 0.3)")};
-  font-size: 17px;
-  margin: 0 8px 0 0;
-  padding: 0.25em 1.25em;
-  border: ${props =>
-    props.active ? "2px solid #2eba69" : "1px solid #e9ebee"};
-  border-radius: 8px;
-  outline: none !important;
-  &:hover {
-    cursor: pointer;
-  }
-`;
 
 const { Title } = Typography;
 const marks = {
@@ -35,14 +17,6 @@ const marks = {
   66: "$$$",
   100: "$$$$"
 };
-
-/**
- * TODO: make price range that can send request
- * @param `/search/filter?cuisine=keyword1,keyword2,..?district=keyword1,keyword2,... &price_range=from&price_range=to`
- * cuisine = [key1, key2 ,key3, ...]
- * district = [key1, key2 ,key3, ...]
- * price range = [$$, $$$$]
- */
 
 export class MFilter extends Component {
   state = {
