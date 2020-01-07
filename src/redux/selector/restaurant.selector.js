@@ -2,6 +2,8 @@ import { createSelector } from "reselect";
 
 const selectRestaurants = state => state.restaurant.restaurantData;
 const selectRestaurantDetail = state => state.restaurant.restaurantDetailPage;
+const selectRestaurantReviewData = state =>
+  state.restaurant.restaurantReviewData;
 
 export const selectRestaurantData = createSelector(
   selectRestaurants,
@@ -63,4 +65,9 @@ export const selectTopReviewRestaurant = createSelector(
 export const selectRestaurantDetailPage = createSelector(
   selectRestaurantDetail,
   restaurant => restaurant
+);
+
+export const selectRestaurantReview = createSelector(
+  selectRestaurantReviewData,
+  restaurantReviewData => restaurantReviewData
 );

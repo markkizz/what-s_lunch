@@ -22,6 +22,7 @@ export const FETCH_RESTAURANT = "FETCH_RESTAURANT";
 export const FETCHED_RESTAURANT = "FETCHED_RESTAURANT";
 export const FETCHED_SEARCH_RESTAURANT = "FETCHED_SEARCH_RESTAURANT";
 export const FETCHED_RESTAURANT_DETAIL = "FETCHED_RESTAURANT_DETAIL";
+export const FETCHED_RESTAURANT_REVIEW = "FETCHED_RESTAURANT_REVIEW";
 
 export const RECEIVE_ERROR = "RECEIVE_ERROR";
 
@@ -96,6 +97,11 @@ export const receive_search_restaurant = searchData => ({
 export const receive_restaurant_detail = restaurantDetail => ({
   type: "FETCHED_RESTAURANT_DETAIL",
   restaurantDetail
+});
+
+export const receive_restaurant_review = reviewData => ({
+  type: "FETCHED_RESTAURANT_REVIEW",
+  restaurantReviewData: reviewData
 });
 
 export const receive_error = () => {
@@ -180,4 +186,13 @@ export const thunk_action_select_restaurant = id => (dispatch, getstate) => {
     .catch(err => {
       console.error(err);
     });
+};
+
+export const thunk_action_review_restaurant = id => (dispatch, getState) => {
+  return axios
+    .get(`/reviewRestaurant/${id}`)
+    .then(({ data }) => {
+      dispatch(receive_restaurant_review(data));
+    })
+    .catch(err => console.error(err));
 };

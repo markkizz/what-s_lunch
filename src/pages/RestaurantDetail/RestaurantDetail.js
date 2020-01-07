@@ -2,9 +2,13 @@ import React, { Component } from "react";
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { createStructuredSelector } from "reselect";
-import { selectRestaurantDetailPage } from "../../redux/selector/restaurant.selector";
+import {
+  selectRestaurantDetailPage,
+  selectRestaurantReview
+} from "../../redux/selector/restaurant.selector";
 import {
   thunk_action_select_restaurant,
+  thunk_action_review_restaurant,
   restaurantToReview
 } from "../../redux/actions/actions";
 import Navbar from "../../components/Navbar/Navbar";
@@ -28,8 +32,9 @@ import ReviewCard from "../../components/ReviewCard/ReviewCard";
 export class RestaurantDetail extends Component {
   componentDidMount = () => {
     const { id } = this.props.match.params;
-    const { fetchRestaurant } = this.props;
+    const { fetchRestaurant, fetchReview } = this.props;
     fetchRestaurant(id);
+    fetchReview(id);
   };
 
   handleClickWriteReview = () => {
@@ -39,7 +44,7 @@ export class RestaurantDetail extends Component {
   };
 
   render() {
-    const { restaurantDetail } = this.props;
+    const { restaurantDetail, restaurantReviewData } = this.props;
     return (
       <div className="bg-page">
         <Navbar />
@@ -168,7 +173,9 @@ export class RestaurantDetail extends Component {
               </Card>
             </Col>
           </Row>
-          <ReviewCard />
+          {restaurantReviewData.map((review, i) => (
+            <ReviewCard key={i + "reviewCard"} reviewData={review} />
+          ))}
         </div>
       </div>
     );
@@ -176,11 +183,13 @@ export class RestaurantDetail extends Component {
 }
 
 const mapStateToProps = createStructuredSelector({
-  restaurantDetail: selectRestaurantDetailPage
+  restaurantDetail: selectRestaurantDetailPage,
+  restaurantReviewData: selectRestaurantReview
 });
 
 const mapDispatchToProps = dispatch => ({
   fetchRestaurant: id => dispatch(thunk_action_select_restaurant(id)),
+  fetchReview: id => dispatch(thunk_action_review_restaurant(id)),
   writeReviewWith: data => dispatch(restaurantToReview(data))
 });
 

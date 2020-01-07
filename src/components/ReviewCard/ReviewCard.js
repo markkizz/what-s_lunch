@@ -4,7 +4,8 @@ import { Row, Col, Card, Rate, Icon } from "antd";
 
 // TODO: send props with review data
 
-function ReviewCard() {
+function ReviewCard(props) {
+  const { user, title, content, rating, user_like } = props.reviewData;
   return (
     <>
       <Card className={style.CardCustom} bodyStyle={{ padding: 0 }}>
@@ -13,30 +14,37 @@ function ReviewCard() {
             <Row>
               <Col span={4}>
                 <img
-                  src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1950&q=80"
+                  src={user.profile_img_url}
                   alt=""
                   className={style.ImgReviewer}
                 />
               </Col>
               <Col span={16}>
-                <span>mark</span>
+                <span>{`${user.first_name} ${user.last_name}`}</span>
                 <br />
                 <span>Bkk, Thailand</span>
               </Col>
-              <Col span={4} style={{textAlign: "right"}}>
-                <p><Icon type="heart" /></p>
-                <p>2k</p>
+              <Col span={4} style={{ textAlign: "right" }}>
+                <p>
+                  <Icon type="heart" />
+                </p>
+                <p>{user_like}</p>
               </Col>
             </Row>
           </Col>
           <Col span={24} className={style.MarginStar}>
-            <Rate disabled defaultValue={5} className={style.StarRate} />
+            <Rate
+              allowHalf
+              disabled
+              defaultValue={rating}
+              className={style.StarRate}
+            />
           </Col>
           <Col span={24}>
-            <h3>This is Title</h3>
+            <h3>{title}</h3>
           </Col>
           <Col span={24}>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloribus quam dolores tempore exercitationem illo dignissimos est modi officia ex quo ullam dolore nostrum quibusdam quia possimus, corporis quasi mollitia fugiat.</p>
+            <p>{content}</p>
           </Col>
         </Row>
       </Card>
