@@ -49,9 +49,11 @@ export class RegisterMobile extends Component {
       <div className={style.BgRegis}>
         <Row type="flex" justify="end">
           <Col>
-            <span className={style.CancelPosition}>
-              <Icon type="close" style={{ fontSize: 18 }} />
-            </span>
+            <Link to="/" className="link">
+              <span className={style.CancelPosition}>
+                <Icon type="close" style={{ fontSize: 18 }} />
+              </span>
+            </Link>
           </Col>
         </Row>
         <Row type="flex" justify="center" align="middle" gutter={[16, 16]}>

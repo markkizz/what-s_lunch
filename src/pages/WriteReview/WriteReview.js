@@ -101,7 +101,6 @@ export class WriteReview extends Component {
     }
   };
 
-  //input: onChange value
   render() {
     return (
       <div className="bg-page">

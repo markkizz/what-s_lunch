@@ -180,6 +180,7 @@ export class HomePage extends Component {
             <div className={style.CardContainer}>
               {restaurants.map((restaurant, i) => (
                 <Link
+                  key={i + restaurant.name}
                   to={`/restaurant-detail/${restaurant.name}/${restaurant.id}`}
                   className="link"
                 >

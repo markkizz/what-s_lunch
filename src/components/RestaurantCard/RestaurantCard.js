@@ -27,9 +27,9 @@ export class RestaurantCard extends Component {
                 <Col span={24}>
                   <h3>{restaurantDetail.name}</h3>
                 </Col>
-                {/* TODO: dynamic star */}
                 <Col span={24}>
                   <Rate
+                    allowHalf
                     disabled
                     defaultValue={restaurantDetail.rating}
                     className={style.StarCustom}
@@ -51,7 +51,11 @@ export class RestaurantCard extends Component {
                     ? restaurantDetail.description.substr(0, maxChar) + "... "
                     : restaurantDetail.description}
                   {restaurantDetail.description.length > maxChar && (
-                    <Link> more </Link>
+                    <Link
+                      to={`/restaurant-detail/${restaurantDetail.name}/${restaurantDetail.id}`}
+                    >
+                      more
+                    </Link>
                   )}
                 </p>
               </Col>
@@ -60,11 +64,15 @@ export class RestaurantCard extends Component {
           <div className={style.ButtonCard}>
             <Row type="flex" justify="center">
               <Col span={12}>
-                <Button className={style.ButtonCustom}>
-                  <p>
-                    <Icon type="edit" /> Review
-                  </p>
-                </Button>
+                <Link
+                  to={`/restaurant-detail/${restaurantDetail.name}/${restaurantDetail.id}`}
+                >
+                  <Button className={style.ButtonCustom}>
+                    <p>
+                      <Icon type="edit" /> Review
+                    </p>
+                  </Button>
+                </Link>
               </Col>
               <Col span={12}>
                 <Button
