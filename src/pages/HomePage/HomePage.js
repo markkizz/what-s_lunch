@@ -184,7 +184,7 @@ export class HomePage extends Component {
                   to={`/restaurant-detail/${restaurant.name}/${restaurant.id}`}
                   className="link"
                 >
-                  <Row key={i + restaurant.name}>
+                  <Row>
                     <Col className={style.CardRestaurant}>
                       <RestaurantMiniCard
                         restaurantName={restaurant.name}
